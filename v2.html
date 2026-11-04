@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Камчатский дом мебели — главная, версия 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&family=JetBrains+Mono:wght@300&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="img/v2-photo.jpg">
+<link rel="preload" as="image" href="img/v2-render.jpg">
+<style>
+/* Версия 2. Первый экран — из макетов «Главная_5», «_5_1», «_5_2» (три положения ползунка); прелоудер и блок проектов — как в версии 1 */
+:root{
+  --ink:#1F1B20;
+  --ink-line:#353236;
+  --coral:#F25948;
+  --chip-line:#D4CFCB;
+  --panel:#F4F4F5;
+  --panel-line:#CFCFCF;
+  --thumb-bg:#D4D4D4;
+  --sans:"Manrope",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:#fff}
+body{width:1920px;color:#fff;font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+/* Текст обрезан по высоте заглавной и базовой линии — как «Vertical trim» в Figma */
+.trim{text-box:trim-both cap alphabetic}
+.t14{font:400 14px/20px var(--sans);letter-spacing:.03em}
+.h48{font:500 48px/53px var(--sans);letter-spacing:-2px}
+.m14{font:300 14px/20px var(--mono)}
+.m16{font:300 16px/20px var(--mono);letter-spacing:.03em}
+.u,.more{text-decoration:none;padding-bottom:3.25px;background:linear-gradient(currentColor,currentColor) 0 100%/100% 1px no-repeat}
+.u:hover,.more:hover{animation:redraw .7s cubic-bezier(.6,0,.2,1)}
+/* при наведении линия уходит вправо и заново прочерчивается слева направо */
+@keyframes redraw{
+  0%{background-size:100% 1px;background-position:100% 100%}
+  45%{background-size:0 1px;background-position:100% 100%}
+  45.01%{background-size:0 1px;background-position:0 100%}
+  100%{background-size:100% 1px;background-position:0 100%}
+}
+
+.abs{position:absolute}
+
+/* ---------- Кнопка ---------- */
+.btn{position:absolute;display:flex;align-items:center;justify-content:center;gap:10px;width:220px;height:50px;background:var(--coral);color:#fff;text-decoration:none;transition:background .2s}
+.btn:hover{background:#E04634}
+.btn img{width:10px;height:10px}
+
+/* ---------- Первый экран: ползунок «3D-проект ↔ готовая кухня» ---------- */
+.hero{position:relative;height:1080px;background:var(--ink);overflow:hidden;--p:960px;user-select:none}
+.hero .shot{position:absolute;left:0;top:0;width:1920px;height:1081px;max-width:none;pointer-events:none}
+/* слева от ползунка — фото, справа — 3D-рендер */
+.hero .photo{position:absolute;inset:0;clip-path:inset(0 calc(1920px - var(--p)) 0 0)}
+.ui{position:absolute;inset:0;color:#fff;--line:rgba(255,255,255,.2);--line-on:#fff;--chip:#A5978F}
+.ui.light{clip-path:inset(0 calc(1920px - var(--p)) 0 0)}
+/* та же вёрстка тёмным цветом поверх рендера — надписи перекрашиваются ровно по линии ползунка */
+.ui.dark{clip-path:inset(0 0 0 var(--p));color:var(--ink);--line:rgba(31,27,32,.2);--line-on:var(--ink);--chip:var(--ink)}
+
+.logo{left:50px;top:35px;width:139px;height:38px;background:currentColor;
+  -webkit-mask:url(img/logo.svg) no-repeat 0 0/100% 100%;mask:url(img/logo.svg) no-repeat 0 0/100% 100%}
+.phone{left:1458px;top:54.5px;font:400 16px/20px var(--sans);letter-spacing:.03em}
+.ui .u.phone{padding-bottom:2.4px}
+.top-btn{left:1650px;top:35px}
+
+/* меню слева: при наведении линии сверху и снизу пункта прочерчиваются белым, появляется домик */
+.menu{position:absolute;left:50px;top:132px;width:116px;list-style:none}
+.menu a{position:relative;display:block;height:50px;padding-top:20px;border-top:1px solid var(--line);text-decoration:none}
+.menu li:last-child a{height:51px;border-bottom:1px solid var(--line)}
+.menu a::before,.menu a::after{content:"";position:absolute;left:0;width:116px;height:1px;background:var(--line-on);
+  transform:scaleX(0);transform-origin:0 50%;transition:transform .45s var(--ease)}
+.menu a::before{top:-1px}
+.menu a::after{top:49px}
+.menu a:hover::before,.menu a:hover::after{transform:scaleX(1)}
+.menu span{display:block;transition:translate .45s var(--ease)}
+.menu i{position:absolute;left:-.5px;top:20.4px;width:11.4px;height:11.1px;background:currentColor;opacity:0;scale:.4;transform-origin:50% 100%;
+  -webkit-mask:url(img/house.svg) no-repeat 0 0/100% 100%;mask:url(img/house.svg) no-repeat 0 0/100% 100%;
+  transition:opacity .35s ease,scale .45s var(--ease)}
+.menu a:hover span{translate:20.3px 0}
+.menu a:hover i{opacity:1;scale:1}
+
+.hero h1{left:50px;top:601px}
+.hero .lead{left:50px;top:845px}
+.hero .cta{left:50px;top:980px}
+.hero .msg{left:300px;top:1000px;letter-spacing:.03em}
+.chips{position:absolute;left:1570px;top:883px;width:300px}
+.chip{height:50px;border:1px solid var(--chip);display:grid;place-items:center}
+.chip+.chip{margin-top:-1px}
+
+/* ползунок: линия 1 px белым 50 %, ручка 31 × 31 */
+.divider{position:absolute;top:0;left:calc(var(--p) - 15px);width:31px;height:1080px;cursor:ew-resize;touch-action:none;z-index:5}
+.divider::before{content:"";position:absolute;left:15px;top:0;width:1px;height:1077px;background:rgba(255,255,255,.5)}
+.handle{position:absolute;left:0;top:523px;width:31px;height:31px;border-radius:50%;background:#fff;display:grid;place-items:center;cursor:ew-resize;transition:scale .2s}
+.handle img{width:17px;height:10px}
+.divider:hover .handle,.hero.drag .handle{scale:1.12}
+.handle:focus-visible{outline:2px solid var(--coral);outline-offset:2px}
+
+/* ---------- Проекты ---------- */
+.projects{position:relative;height:1074px;background:#fff;color:var(--ink)}
+.card{position:absolute;left:50px;top:100px;width:1820px;height:900px;display:flex;cursor:pointer}
+.card-photo{position:relative;width:900px;height:900px;overflow:hidden;background:#D9D9D9}
+.card-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .45s ease}
+.tag{position:absolute;left:10px;top:10px;height:40px;min-width:120px;padding:0 16px 0 49px;background:var(--ink);color:#fff;display:flex;align-items:center;letter-spacing:.015em}
+.tag img{position:absolute;left:20.5px;top:12.5px;width:14px;height:16px}
+.panel{position:relative;width:920px;height:900px;background:var(--panel)}
+.panel svg{position:absolute;inset:0;width:920px;height:900px;pointer-events:none}
+.panel .title{left:70px;top:70px}
+.params{position:absolute;left:70px;top:198px;height:20px;display:flex;align-items:center;gap:20px}
+.params i{width:1px;height:20px;margin-right:-1px;background:rgba(31,27,32,.2)}
+.price{left:70px;top:358px;font:400 30px/30px var(--sans);letter-spacing:.0075em;white-space:nowrap}
+.price small{font:300 16px var(--mono);letter-spacing:0}
+.panel .btn{left:70px;top:410px}
+.more{left:70px;top:820px;color:#000;letter-spacing:-.05em}
+.fade{transition:opacity .3s ease}
+.fade.out{opacity:0}
+
+.thumbs{position:absolute;left:711px;top:0;width:209px;height:900px;padding:30px 0 38px 29px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none}
+.thumbs::-webkit-scrollbar{display:none}
+.thumb{display:block;width:150px;margin-bottom:28px;text-align:left;cursor:pointer}
+.thumb .ph{position:relative;width:150px;height:150px;background:var(--thumb-bg);opacity:.7;transition:opacity .25s;
+  clip-path:polygon(0 0,133.5px 0,150px 16.5px,150px 150px,17.5px 150px,0 132.5px)}
+.thumb .ph img{width:100%;height:100%;object-fit:cover}
+.thumb:hover .ph{opacity:.85}
+.thumb.on .ph{opacity:1}
+.thumb .nm{display:block;margin-top:10px;font:400 14px/17px var(--sans);color:#000}
+
+/* ---------- Прелоудер ---------- */
+.pre{position:fixed;inset:0;z-index:100;pointer-events:none}
+.pre-top,.pre-btm{position:absolute;left:0;right:0;height:50%;background:var(--ink);transition:transform .7s cubic-bezier(.7,0,.2,1)}
+.pre-top{top:0}
+.pre-btm{bottom:0}
+.pre-top img{position:absolute;left:50px;bottom:50px;width:353px;height:96.5px}
+.pre-bar{position:absolute;left:50px;right:50px;bottom:0;height:1px;background:rgba(255,255,255,.5)}
+.pre-bar b{display:block;height:100%;width:0;background:#fff}
+.pre-pct{position:absolute;right:50.8px;bottom:50px;font:400 212px/212px var(--mono);letter-spacing:.03em;color:#fff;white-space:nowrap}
+.pre-pct small{margin-left:14.7px;font-size:64px;letter-spacing:0}
+.pre.done .pre-top{transform:translateY(-100%)}
+.pre.done .pre-btm{transform:translateY(100%)}
+.pre.gone{display:none}
+
+/* ---------- Анимации появления ---------- */
+:root{--ease:cubic-bezier(.2,.7,.1,1)}
+/* слова заголовков проявляются из размытия снизу вверх, по очереди */
+.w{display:inline-block;opacity:0;transform:translateY(.35em);filter:blur(10px);
+  transition:opacity .9s var(--ease),transform .9s var(--ease),filter .9s var(--ease);transition-delay:calc(var(--d,0s) + var(--i)*55ms)}
+.on-ready .w,.inview .w{opacity:1;transform:none;filter:none}
+.inview .replay .w{opacity:0;transform:translateY(.35em);filter:blur(10px);transition:none}
+/* остальной текст и кнопки — мягкий подъём */
+.rise{opacity:0;translate:0 24px;transition:opacity .9s var(--ease) var(--d,0s),translate .9s var(--ease) var(--d,0s)}
+.ready .hero .rise,.inview .rise{opacity:1;translate:0 0}
+.btn.rise{transition:background .2s,opacity .9s var(--ease) var(--d,0s),translate .9s var(--ease) var(--d,0s)}
+.arrow.rise{transition:border-color .2s,opacity .9s var(--ease) var(--d,0s),translate .9s var(--ease) var(--d,0s)}
+/* фото медленно «оседает» в кадр */
+.hero .shot{scale:1.06;transition:scale 2.4s var(--ease)}
+.ready .hero .shot{scale:1}
+/* линии прочерчиваются */
+.ln{transform-box:fill-box;transition:transform 1.4s var(--ease) var(--d,0s)}
+.ln.v{transform:scaleY(0);transform-origin:50% 0}
+.ln.h{transform:scaleX(0);transform-origin:0 50%}
+.ln.bl{transform:scale(0);transform-origin:0 100%}
+.ln.tl{transform:scale(0);transform-origin:0 0}
+.ready .hero .ln,.inview .ln{transform:none}
+/* для сверки с Figma и для тех, кто отключил анимации */
+.noanim *,.noanim *::before{transition:none!important;animation:none!important}
+@media (prefers-reduced-motion:reduce){.w,.rise,.ln,.shot{transition:none!important}}
+</style>
+<script>
+  // Макет нарисован в ширину 1920: масштабируем страницу целиком, чтобы пропорции совпадали с Figma на любом десктопе
+  function fit(){document.documentElement.style.zoom=innerWidth/1920}
+  fit();addEventListener('resize',fit);
+  document.documentElement.classList.add('loading');
+</script>
+</head>
+<body>
+
+<div class="pre" id="pre">
+  <div class="pre-top"><img src="img/logo.svg" alt=""><div class="pre-bar"><b id="preBar"></b></div></div>
+  <div class="pre-btm">
+    <div class="pre-pct trim"><span id="prePct">0</span><small>%</small></div>
+  </div>
+</div>
+
+<section class="hero" id="hero">
+  <img class="shot" src="img/v2-render.jpg" alt="3D-проект кухни">
+  <div class="photo"><img class="shot" src="img/v2-photo.jpg" alt="Готовая кухня: пара готовит ужин"></div>
+
+  <div class="ui light">
+    <span class="abs logo rise" style="--d:.05s" role="img" aria-label="Камчатский дом мебели"></span>
+    <ul class="menu t14 rise" style="--d:.15s">
+      <li><a href="#"><i></i><span class="trim">Контакты</span></a></li>
+      <li><a href="#"><i></i><span class="trim">Как работаем</span></a></li>
+      <li><a href="#projects"><i></i><span class="trim">Проекты</span></a></li>
+      <li><a href="#"><i></i><span class="trim">Дизайнеры</span></a></li>
+      <li><a href="#"><i></i><span class="trim">Производство</span></a></li>
+      <li><a href="#"><i></i><span class="trim">Отзывы</span></a></li>
+    </ul>
+    <a class="abs phone u trim rise" style="--d:.1s" href="tel:+79245858263">+7 (924) 585-82-63</a>
+    <a class="btn top-btn rise" style="--d:.15s" href="#"><span class="trim t14">Рассчитать кухню</span><img src="img/arrow-ne.svg" alt=""></a>
+
+    <h1 class="abs h48 trim split" style="--d:.15s">Бесплатно измерим<br>квартиру и создадим<br>кухню под ваши<br>размеры</h1>
+    <p class="abs lead t14 trim rise" style="--d:.75s">Бесплатный замер и 3D-проект в трёх вариантах.<br>Привезём кухню с фабрики к вам домой и соберём.<br>Гарантия 24 месяца.</p>
+    <a class="btn cta rise" style="--d:.9s" href="#"><span class="trim t14">Рассчитать кухню</span><img src="img/arrow-ne.svg" alt=""></a>
+    <a class="abs msg m14 u trim rise" style="--d:1s" href="#">или напишите в WhatsApp, Telegram или MAX</a>
+
+    <div class="chips m16">
+      <div class="chip rise" style="--d:1.1s"><span class="trim">1850+ кухонь с 2015 года</span></div>
+      <div class="chip rise" style="--d:1.2s"><span class="trim">4,8· 230 отзывов</span></div>
+      <div class="chip rise" style="--d:1.3s"><span class="trim">Работаем по всему краю</span></div>
+    </div>
+  </div>
+
+  <div class="divider" id="divider">
+    <button class="handle" id="handle" role="slider" aria-label="Сравнить 3D-проект и готовую кухню" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><img src="img/handle-arrows-dark.svg" alt=""></button>
+  </div>
+</section>
+
+<section class="projects" id="projects">
+  <div class="card">
+    <div class="card-photo rise" style="--d:0s">
+      <img id="cPhoto" src="img/project-1.jpg" alt="">
+      <div class="tag t14"><img src="img/arrow-turn.svg" alt=""><span class="trim fade" id="cTag">Угловая</span></div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 920 900" aria-hidden="true">
+        <g fill="#CFCFCF">
+          <rect class="ln h" style="--d:.2s" x="0" y="287" width="710" height="1" shape-rendering="crispEdges"/>
+          <rect class="ln v" style="--d:.1s" x="710" y="0" width="1" height="900" shape-rendering="crispEdges"/>
+          <rect class="ln v" style="--d:.4s" x="355" y="288" width="1" height="612" shape-rendering="crispEdges"/>
+          <path class="ln bl" style="--d:.6s" d="M355.34 823.29 L709.34 469.29 L710.05 470 L356.05 824 Z"/>
+        </g>
+      </svg>
+      <div class="fade" id="cText">
+        <h2 class="abs title h48 trim split" style="--d:.1s" id="cTitle">Светлая кухня<br>на Северо-Востоке</h2>
+        <div class="params m14 rise" style="--d:.45s">
+          <span class="trim" id="cArea">S = 9,4 м²</span><i></i><span class="trim" id="cDays">38 дней</span>
+        </div>
+        <div class="abs price trim rise" style="--d:.55s"><small>от </small><span id="cPrice">420 000 р</span></div>
+      </div>
+      <a class="btn rise" style="--d:.65s" href="#" onclick="return false"><span class="trim t14">Подробнее</span><img src="img/arrow-ne.svg" alt=""></a>
+      <a class="abs more m14 trim rise" style="--d:.75s" href="#">Смотреть больше проектов →</a>
+
+      <div class="thumbs rise" style="--d:.3s" id="thumbs"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+/* Данные проектов — заглушки до реальных данных от КДМ */
+const PROJECTS=[
+  {img:'img/project-1.jpg',tag:'Угловая',title:'Светлая кухня<br>на Северо-Востоке',short:'Светлая кухня<br>на Северо-Востоке',area:'9,4',days:'38 дней',price:'420 000 р'},
+  {img:'img/project-2.jpg',tag:'С островом',title:'Тёмная кухня<br>на Ленина',short:'Тёмная кухня<br>на Ленина',area:'14,2',days:'45 дней',price:'690 000 р'},
+  {img:'img/project-3.jpg',tag:'Прямая',title:'Кухня из дуба<br>на Океанской',short:'Кухня из дуба<br>на Океанской',area:'6,8',days:'32 дня',price:'310 000 р'},
+  {img:'img/project-4.jpg',tag:'Угловая',title:'Белая кухня<br>на Мишенной',short:'Белая кухня<br>на Мишенной',area:'8,1',days:'35 дней',price:'385 000 р'},
+  {img:'img/project-5.jpg',tag:'Угловая',title:'Зелёная кухня<br>на Кутузова',short:'Зелёная кухня<br>на Кутузова',area:'7,6',days:'40 дней',price:'450 000 р'},
+];
+
+/* ---------- Разбивка заголовков на слова для анимации ---------- */
+function split(el){
+  /* слова становятся inline-block, а с ними обрезка text-box по-разному работает в браузерах
+     (в Safari первая строка отъезжала). Поэтому один раз меряем, сколько обрезка снимала сверху,
+     выключаем её и сдвигаем заголовок на эту величину — верх заглавных остаётся там же, где в Figma. */
+  if(!el.dataset.capfix){
+    const fs=parseFloat(getComputedStyle(el).fontSize);
+    let off=fs*.2146; // запас для браузеров без text-box: (53 − 65,5)/2 + 1,065·48 − 0,72·48 ≈ 10,3 px
+    if(CSS.supports('text-box','trim-both cap alphabetic')){
+      const Ht=el.offsetHeight;
+      el.style.textBox='none';
+      const m=document.createElement('span');m.style.cssText='display:inline-block;width:0;height:0';
+      el.append(m);
+      const er=el.getBoundingClientRect(),k=er.height/el.offsetHeight||1;
+      off=(m.getBoundingClientRect().top-er.top)/k-Ht;
+      m.remove();
+    }
+    el.style.textBox='none';el.style.marginTop=-off+'px';el.dataset.capfix=off.toFixed(2);
+  }
+  let i=0;
+  el.innerHTML=el.innerHTML.split(/(<br>)/).map(part=>part==='<br>'?part:
+    part.split(/(\s+)/).map(w=>/^\s*$/.test(w)?w:`<span class="w" style="--i:${i++}">${w}</span>`).join('')).join('');
+}
+document.querySelectorAll('.split').forEach(split);
+/* первый экран стартует после прелоудера, блок проектов — при прокрутке */
+new MutationObserver(()=>{if(document.documentElement.classList.contains('ready'))document.querySelector('.hero').classList.add('on-ready')})
+  .observe(document.documentElement,{attributes:true,attributeFilter:['class']});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('inview');io.unobserve(e.target)}}),{threshold:.25});
+io.observe(document.querySelector('.projects'));
+/* запасной вариант на случай, если наблюдатель не сработал (фоновые вкладки, старые браузеры) */
+function checkView(){const el=document.querySelector('.projects');if(el.classList.contains('inview'))return removeEventListener('scroll',checkView);
+  const r=el.getBoundingClientRect(),z=parseFloat(document.documentElement.style.zoom)||1;if(r.top*z<innerHeight*.75)el.classList.add('inview')}
+addEventListener('scroll',checkView,{passive:true});
+
+/* ---------- Первый экран: тёмная копия интерфейса и ползунок ---------- */
+const hero=document.getElementById('hero');
+const light=hero.querySelector('.ui.light');
+const dark=light.cloneNode(true);
+dark.className='ui dark';dark.setAttribute('aria-hidden','true');
+dark.querySelectorAll('a').forEach(a=>a.tabIndex=-1);
+light.after(dark);
+
+let P=960,anim;
+function setP(x){P=Math.max(0,Math.min(1920,x));hero.style.setProperty('--p',P+'px');handle.setAttribute('aria-valuenow',Math.round(P/19.2))}
+function toX(e){const r=hero.getBoundingClientRect();return (e.clientX-r.left)/r.width*1920}
+divider.addEventListener('pointerdown',e=>{
+  cancelAnimationFrame(anim);divider.setPointerCapture(e.pointerId);hero.classList.add('drag');setP(toX(e));
+  const move=ev=>setP(toX(ev));
+  const up=()=>{hero.classList.remove('drag');divider.removeEventListener('pointermove',move);divider.removeEventListener('pointerup',up);divider.removeEventListener('pointercancel',up)};
+  divider.addEventListener('pointermove',move);divider.addEventListener('pointerup',up);divider.addEventListener('pointercancel',up);
+});
+handle.addEventListener('keydown',e=>{
+  const step=e.shiftKey?192:48;
+  if(e.key==='ArrowLeft'){setP(P-step);e.preventDefault()}
+  if(e.key==='ArrowRight'){setP(P+step);e.preventDefault()}
+});
+/* после прелоудера ползунок выезжает справа: сначала видна готовая кухня, затем проявляется 3D-проект */
+function intro(){
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches)return setP(960);
+  setP(1920);
+  const t0=performance.now(),D=1800,from=1920,to=960;
+  const ease=t=>1-Math.pow(1-t,4);
+  (function f(now){const t=Math.min(1,(now-t0-500)/D);if(t>0)setP(from+(to-from)*ease(t));if(t<1)anim=requestAnimationFrame(f)})(t0);
+}
+function restart(){intro()}
+
+/* ---------- Карточка проекта + миниатюры ---------- */
+const thumbs=document.getElementById('thumbs');
+thumbs.innerHTML=PROJECTS.map((p,i)=>`<button class="thumb${i?'':' on'}" data-i="${i}"><span class="ph" style="display:block"><img src="${p.img}" alt="" loading="lazy"></span><span class="nm trim">${p.short}</span></button>`).join('');
+let active=0;
+thumbs.addEventListener('click',e=>{
+  const t=e.target.closest('.thumb');if(!t)return;
+  const i=+t.dataset.i;if(i===active)return;
+  active=i;
+  thumbs.querySelectorAll('.thumb').forEach(b=>b.classList.toggle('on',b===t));
+  const p=PROJECTS[i];
+  const text=[cText,cTag];
+  text.forEach(el=>el.classList.add('out'));
+  cPhoto.style.opacity=0;
+  setTimeout(()=>{
+    cTitle.innerHTML=p.title;split(cTitle);cTitle.classList.add('replay');void cTitle.offsetWidth;cTitle.classList.remove('replay');cTag.textContent=p.tag;
+    cArea.textContent=`S = ${p.area} м²`;cDays.textContent=p.days;cPrice.textContent=p.price;
+    cPhoto.onload=()=>cPhoto.style.opacity=1;cPhoto.src=p.img;
+    if(cPhoto.complete)cPhoto.style.opacity=1;
+    text.forEach(el=>el.classList.remove('out'));
+  },300);
+});
+/* колесо над миниатюрами прокручивает только их */
+thumbs.addEventListener('wheel',e=>{
+  const max=thumbs.scrollHeight-thumbs.clientHeight;
+  if(max<=0)return;
+  e.preventDefault();thumbs.scrollTop+=e.deltaY;
+},{passive:false});
+
+/* ---------- Прелоудер ---------- */
+(function(){
+  const pre=document.getElementById('pre');
+  const imgs=[...document.images].filter(i=>!i.loading||i.loading!=='lazy');
+  let real=0,shown=0;const t0=performance.now(),MIN=1400;
+  const tasks=imgs.map(i=>i.complete?Promise.resolve():new Promise(r=>{i.onload=i.onerror=r}));
+  tasks.push(document.fonts.ready);
+  tasks.forEach(p=>p.then(()=>{real++}));
+  let last=t0;
+  function tick(now){
+    if(window.PRE_FREEZE){preBar.style.width=PRE_FREEZE/100*1820+'px';prePct.textContent=PRE_FREEZE;return}
+    const target=Math.min(real/tasks.length,(now-t0)/MIN)*100;
+    // догоняем цель по реальному времени, а не по кадрам
+    shown+=(target-shown)*(1-Math.exp(-(now-last)/90));last=now;
+    if(now-t0>6000)shown=100;
+    if(target>=100&&shown>99.5)shown=100;
+    preBar.style.width=shown+'%';
+    prePct.textContent=Math.floor(shown);
+    if(shown<100)return requestAnimationFrame(tick);
+    setTimeout(()=>{
+      pre.classList.add('done');
+      document.documentElement.classList.remove('loading');
+      document.documentElement.classList.add('ready');
+      restart();
+      setTimeout(()=>pre.classList.add('gone'),800);
+    },200);
+  }
+  requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>
+<script>
+/* Проверка: index.html#overlay накладывает экспорт из Figma в режиме «разница» (совпадение = чёрный) */
+if(location.hash==='#pre-overlay'){window.PRE_FREEZE=39;const o=document.createElement('img');o.src='_ref/preloader-figma.png';o.style.cssText='position:fixed;left:0;top:0;width:1920px;height:1080px;z-index:999;mix-blend-mode:difference;pointer-events:none';document.body.append(o)}
+if(/#(static|overlay)/.test(location.hash)){window.intro=()=>{};}
+if(/#(static|overlay)/.test(location.hash)){document.documentElement.classList.add('ready','noanim');document.querySelector('.hero').classList.add('on-ready');document.querySelector('.projects').classList.add('inview')}
+if(location.hash==='#static'){document.getElementById('pre').remove();document.documentElement.classList.remove('loading')}
+/* v2.html#overlay — ползунок посередине (Главная_5_2), #overlay-photo — только фото (Главная_5), #overlay-render — только рендер (Главная_5_1) */
+const OV={'#overlay':['v2-split',960],'#overlay-photo':['v2-photo',1920],'#overlay-render':['v2-render',0]}[location.hash];
+if(OV){setP(OV[1]);window.intro=()=>{};const o=document.createElement('img');o.src='_ref/'+OV[0]+'-figma.png';o.style.cssText='position:absolute;left:0;top:0;width:1920px;height:2154px;z-index:999;mix-blend-mode:difference;pointer-events:none';document.body.append(o);document.getElementById('pre').remove();document.documentElement.classList.remove('loading')}
+</script>
