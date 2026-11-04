@@ -1,0 +1,1674 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Камчатский дом мебели — прототип в дизайне концепта</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=JetBrains+Mono:wght@300;400&display=block" rel="stylesheet">
+<link rel="preload" as="image" href="img/hero-1.jpg">
+<style>
+/* Все размеры — из макета Figma «Главная» (кадр 1920 × 2154), координаты сняты с векторного PDF */
+:root{
+  --ink:#1F1B20;
+  --ink-line:#353236;
+  --coral:#F25948;
+  --chip-line:#D4CFCB;
+  --panel:#F4F4F5;
+  --panel-line:#CFCFCF;
+  --thumb-bg:#D4D4D4;
+  --sans:"Manrope",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:#fff}
+body{width:1920px;color:#fff;font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+/* Текст обрезан по высоте заглавной и базовой линии — как «Vertical trim» в Figma */
+.trim{text-box:trim-both cap alphabetic}
+.t14{font:400 14px/20px var(--sans);letter-spacing:.03em}
+.h48{font:500 48px/53px var(--sans);letter-spacing:-2px}
+.m14{font:300 14px/20px var(--mono)}
+.m16{font:300 16px/20px var(--mono);letter-spacing:.03em}
+.u,.more{text-decoration:none;padding-bottom:3.25px;background:linear-gradient(currentColor,currentColor) 0 100%/100% 1px no-repeat}
+.u:hover,.more:hover{animation:redraw .7s cubic-bezier(.6,0,.2,1)}
+/* при наведении линия уходит вправо и заново прочерчивается слева направо */
+@keyframes redraw{
+  0%{background-size:100% 1px;background-position:100% 100%}
+  45%{background-size:0 1px;background-position:100% 100%}
+  45.01%{background-size:0 1px;background-position:0 100%}
+  100%{background-size:100% 1px;background-position:0 100%}
+}
+
+.abs{position:absolute}
+
+/* ---------- Кнопка ---------- */
+.btn{position:absolute;display:flex;align-items:center;justify-content:center;gap:10px;width:220px;height:50px;background:var(--coral);color:#fff;text-decoration:none;transition:background .2s}
+.btn:hover{background:#E04634}
+.btn img{width:10px;height:10px}
+
+/* ---------- Шапка ---------- */
+.header{position:fixed;left:20px;top:20px;z-index:50;width:1880px;height:80px;border-radius:10px;background:rgba(56,49,58,.5);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px)}
+.header .logo{left:30px;top:21px;width:139px;height:38px}
+.header nav{position:absolute;right:30px;top:15px;height:50px;display:flex;align-items:center;gap:50px}
+.header nav a{text-decoration:none;transition:opacity .2s}
+.header nav a:hover{opacity:.7}
+.header nav a.u{padding-bottom:1.5px}
+.header nav a.u:hover{opacity:1}
+.header .sep{width:1px;height:50px;background:rgba(255,255,255,.2)}
+.header .btn{position:static}
+
+/* ---------- Первый экран ---------- */
+.hero{position:relative;height:1080px;background:var(--ink);overflow:hidden}
+.hero svg.lines{position:absolute;inset:0;width:1920px;height:1080px;pointer-events:none}
+.hero-media{position:absolute;left:707px;top:22px;width:1191px;height:1040px;
+  clip-path:polygon(0 0,1191px 0,1191px 1040px,502.81px 1040px,251px 788.19px,251px 247px)}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity .9s ease}
+.slide.on{opacity:1}
+.slide img{width:100%;height:100%;object-fit:cover}
+/* Кадр 1 — ровно как в Figma: 2059.35 × 1159, смещение −846.17 / −131 */
+.slide img.figma{position:absolute;left:-846.17px;top:-131px;width:2059.35px;height:1159px;max-width:none}
+
+.hero h1{left:50px;top:601px}
+.hero .lead{left:50px;top:845px}
+.hero .btn{left:50px;top:980px}
+.hero .msg{left:300px;top:1000px;letter-spacing:.03em}
+.arrow{position:absolute;top:980px;width:50px;height:50px;border:1px solid var(--ink-line);display:grid;place-items:center;transition:border-color .2s}
+.arrow:hover{border-color:rgba(255,255,255,.6)}
+.arrow img{width:15px;height:15px}
+/* «Главная_2»: чипсы перенесены влево наверх, столбиком */
+.hero .chips{position:absolute;left:50px;top:150px;display:flex;flex-direction:column;gap:10px}
+.chip{width:300px;height:50px;border:1px solid var(--chip-line);display:grid;place-items:center}
+.chips .chip{border-color:var(--ink-line)}
+
+/* ---------- Проекты ---------- */
+.projects{position:relative;height:1074px;background:#fff;color:var(--ink)}
+.projects .card{position:absolute;left:50px;top:100px;width:1820px;height:900px;display:flex;cursor:pointer}
+.card-photo{position:relative;width:900px;height:900px;overflow:hidden;background:#D9D9D9}
+.card-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .45s ease}
+.card-photo .tag{position:absolute;left:10px;top:10px;height:40px;min-width:120px;padding:0 16px 0 49px;background:var(--ink);color:#fff;display:flex;align-items:center;letter-spacing:.015em}
+.tag img{position:absolute;left:20.5px;top:12.5px;width:14px;height:16px}
+.panel{position:relative;width:920px;height:900px;background:var(--panel)}
+.panel svg{position:absolute;inset:0;width:920px;height:900px;pointer-events:none}
+.panel .title{left:70px;top:70px}
+.panel .params{position:absolute;left:70px;top:198px;height:20px;display:flex;align-items:center;gap:20px}
+.panel .params i{width:1px;height:20px;margin-right:-1px;background:rgba(31,27,32,.2)}
+.price{left:70px;top:358px;font:400 30px/30px var(--sans);letter-spacing:.0075em;white-space:nowrap}
+.price small{font:300 16px var(--mono);letter-spacing:0}
+.panel .btn{left:70px;top:410px}
+.more{left:70px;top:820px;color:#000;letter-spacing:-.05em}
+.fade{transition:opacity .3s ease}
+.fade.out{opacity:0}
+
+#thumbs{position:absolute;left:711px;top:0;width:209px;height:900px;padding:30px 0 38px 29px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none}
+#thumbs::-webkit-scrollbar{display:none}
+.thumb{display:block;width:150px;margin-bottom:28px;text-align:left;cursor:pointer}
+.thumb .ph{position:relative;width:150px;height:150px;background:var(--thumb-bg);opacity:.7;transition:opacity .25s;
+  clip-path:polygon(0 0,133.5px 0,150px 16.5px,150px 150px,17.5px 150px,0 132.5px)}
+.thumb .ph img{width:100%;height:100%;object-fit:cover}
+.thumb:hover .ph{opacity:.85}
+.thumb.on .ph{opacity:1}
+.thumb .nm{display:block;margin-top:10px;font:400 14px/17px var(--sans);color:#000}
+
+/* ---------- Прелоудер ---------- */
+.pre{position:fixed;inset:0;z-index:100;pointer-events:none}
+.pre-top,.pre-btm{position:absolute;left:0;right:0;height:50%;background:var(--ink);transition:transform .7s cubic-bezier(.7,0,.2,1)}
+.pre-top{top:0}
+.pre-btm{bottom:0}
+.pre-top img{position:absolute;left:50px;bottom:50px;width:353px;height:96.5px}
+.pre-bar{position:absolute;left:50px;right:50px;bottom:0;height:1px;background:rgba(255,255,255,.5)}
+.pre-bar b{display:block;height:100%;width:calc(var(--p,0)*1%);background:#fff}
+.pre-pct{position:absolute;right:50.8px;bottom:50px;font:300 212px/212px var(--mono);letter-spacing:.03em;color:#fff;white-space:nowrap}
+.pre-pct small{margin-left:14.7px;font-size:64px;letter-spacing:0}
+.pre.done .pre-top{transform:translateY(-100%)}
+.pre.done .pre-btm{transform:translateY(100%)}
+.pre.gone{display:none}
+html.loading .header{transform:translateY(-140px)}
+.header{transition:transform .6s ease .25s}
+
+/* ---------- Анимации появления ---------- */
+:root{--ease:cubic-bezier(.2,.7,.1,1)}
+/* слова заголовков проявляются из размытия снизу вверх, по очереди */
+.w{display:inline-block;opacity:0;transform:translateY(.35em);filter:blur(10px);
+  transition:opacity .9s var(--ease),transform .9s var(--ease),filter .9s var(--ease);transition-delay:calc(var(--d,0s) + var(--i)*55ms)}
+.on-ready .w,.inview .w{opacity:1;transform:none;filter:none}
+.inview .replay .w{opacity:0;transform:translateY(.35em);filter:blur(10px);transition:none}
+/* остальной текст и кнопки — мягкий подъём */
+.rise{opacity:0;translate:0 24px;transition:opacity .9s var(--ease) var(--d,0s),translate .9s var(--ease) var(--d,0s)}
+.ready .hero .rise,.ready .mhero .rise,.inview .rise{opacity:1;translate:0 0}
+.btn.rise{transition:background .2s,opacity .9s var(--ease) var(--d,0s),translate .9s var(--ease) var(--d,0s)}
+.arrow.rise{transition:border-color .2s,opacity .9s var(--ease) var(--d,0s),translate .9s var(--ease) var(--d,0s)}
+/* фото медленно «оседает» в кадр */
+.slide{scale:1.08;transition:opacity .9s ease,scale 2.2s var(--ease)}
+.ready .slide{scale:1}
+/* линии прочерчиваются */
+.ln{transform-box:fill-box;transition:transform 1.4s var(--ease) var(--d,0s)}
+.ln.v{transform:scaleY(0);transform-origin:50% 0}
+.ln.h{transform:scaleX(0);transform-origin:0 50%}
+.ln.bl{transform:scale(0);transform-origin:0 100%}
+.ln.tl{transform:scale(0);transform-origin:0 0}
+.ready .hero .ln,.ready .mhero .ln,.inview .ln{transform:none}
+/* для сверки с Figma и для тех, кто отключил анимации */
+.noanim *,.noanim *::before{transition:none!important;animation:none!important}
+@media (prefers-reduced-motion:reduce){.w,.rise,.ln,.slide{transition:none!important}}
+
+/* =================== Мобильная версия: кадр Figma 440 × 2026 (iPhone 18 Pro Max) =================== */
+html:not(.m) .m-only{display:none}
+.m .d-only{display:none}
+.m body{width:440px}
+.h28{font:500 28px/34px var(--sans);letter-spacing:-.02em}
+.t12{font:400 12px/17px var(--sans);letter-spacing:.03em}
+.m12{font:300 12px/16px var(--mono);letter-spacing:.03em}
+.mlogo{left:30px;top:30px;width:153.63px;height:42px}
+.burger{position:absolute;left:360px;top:30px;width:50px;height:50px;border:1px solid rgba(255,255,255,.3)}
+.burger i{position:absolute;height:1px;background:#fff}
+.burger i:nth-child(1){left:14px;top:17px;width:20px}
+.burger i:nth-child(2){left:24px;top:23px;width:10px}
+.burger i:nth-child(3){left:14px;top:29px;width:20px}
+
+/* ---------- Мобильный первый экран ---------- */
+.mhero{position:relative;height:1160px;background:var(--ink);overflow:hidden}
+.mhero svg.lines{position:absolute;inset:0;width:440px;height:1160px;pointer-events:none}
+.mhero-media{position:absolute;left:30px;top:110px;width:380px;height:385px;background:#28232A;
+  clip-path:polygon(0 0,380px 0,380px 385px,305.5px 310px,97px 310px,0 213px)}
+/* кадр 1 — как в Figma: 766 × 431.1, смещение −367 / −38.05 */
+.mhero-media .slide img.figma{position:absolute;left:-367px;top:-38.05px;width:766px;height:431.1px;max-width:none}
+.mhero h1{left:30px;top:459.84px}
+.mhero .lead{left:30px;top:578.36px}
+.mhero .btn{left:30px;top:681px}
+.mhero .arrow{top:681px}
+.mhero .msg{left:30px;top:761.24px}
+.mhero .u.msg{padding-bottom:2.76px}
+.mchips{position:absolute;left:30px;top:840px;width:380px;height:250px;padding:40px;display:flex;flex-direction:column;gap:10px;
+  background:rgba(56,49,58,.5);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px)}
+
+/* ---------- Мобильный блок проектов: слайдер карточек ---------- */
+.mprojects{position:relative;height:866px;background:#fff;color:var(--ink)}
+.mtrack{position:absolute;left:0;top:30px;width:440px;display:flex;gap:10px;padding:0 30px;overflow-x:auto;
+  scroll-snap-type:x mandatory;scroll-padding:0 30px;overscroll-behavior-x:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.mtrack::-webkit-scrollbar{display:none}
+.mcard{position:relative;flex:0 0 380px;scroll-snap-align:start}
+.mcard .ph{width:380px;height:380px;background:#D9D9D9;overflow:hidden}
+.mcard .ph img{width:100%;height:100%;object-fit:cover}
+.mcard .panel{width:380px;height:346px}
+.mcard .panel svg{width:380px;height:346px}
+.mcard .title{left:30px;top:39.84px}
+.mcard .params{left:30px;top:124px}
+.mcard .price{left:30px;top:214.1px;font:400 30px/30px var(--mono);letter-spacing:0}
+.mcard .price .sp{display:inline-block;width:6px}
+.mcard .btn{left:30px;top:266px}
+.marrow{position:absolute;top:786px;width:50px;height:50px;border:1px solid var(--panel-line);display:grid;place-items:center;transition:border-color .2s,opacity .2s}
+.marrow:hover{border-color:var(--ink)}
+.marrow i{width:15px;height:15px;background:var(--ink);-webkit-mask:url(img/arrow-left.svg) center/contain no-repeat;mask:url(img/arrow-left.svg) center/contain no-repeat}
+.marrow.nx i{-webkit-mask-image:url(img/arrow-right.svg);mask-image:url(img/arrow-right.svg)}
+.mdots{position:absolute;right:30px;top:811.5px;translate:0 -50%;display:flex;align-items:center;gap:10px}
+.mdots button{width:5px;height:5px;border-radius:50%;background:#D9D9D9;transition:width .3s var(--ease),height .3s var(--ease),background .3s}
+.mdots button.on{width:9px;height:9px;background:var(--coral)}
+/* увеличенная зона нажатия для пальца */
+.mdots button{position:relative}
+.mdots button::after{content:"";position:absolute;inset:-12px -5px}
+
+/* ---------- Мобильное меню ---------- */
+.mmenu{position:fixed;inset:0;z-index:60;background:var(--ink);color:#fff;overflow-y:auto;overscroll-behavior:contain;
+  opacity:0;visibility:hidden;transition:opacity .45s var(--ease),visibility 0s .45s}
+.mmenu .in{position:relative;width:440px;height:956px}
+.menu-open .mmenu{opacity:1;visibility:visible;transition:opacity .45s var(--ease)}
+.menu-open body{overflow:hidden}
+.burger.mclose i{left:14px;top:24px;width:20px;transform:rotate(45deg)}
+.burger.mclose i+i{transform:rotate(-45deg)}
+.mnav{position:absolute;left:32px;top:110px;width:380px;list-style:none}
+.mnav a{position:relative;display:block;height:70px;padding-top:23.84px;border-top:1px solid var(--ink-line);font:400 28px/34px var(--sans);letter-spacing:.03em;text-decoration:none;-webkit-tap-highlight-color:transparent}
+.mnav li:last-child a{height:71px;border-bottom:1px solid var(--ink-line)}
+.mnav a::before,.mnav a::after{content:"";position:absolute;left:0;z-index:1;width:380px;height:1px;background:#fff;transform:scaleX(0);transform-origin:0 50%;transition:transform .45s var(--ease)}
+.mnav a::before{top:-1px}
+.mnav a::after{top:69px}
+.mnav span{display:block;transition:translate .45s var(--ease)}
+.mnav i{position:absolute;left:-1px;top:22.92px;width:22.68px;height:22.08px;background:var(--coral);opacity:0;scale:.4;transform-origin:0 100%;
+  transition:opacity .3s,scale .45s var(--ease);-webkit-mask:url(img/house.svg) center/100% 100% no-repeat;mask:url(img/house.svg) center/100% 100% no-repeat}
+.mnav a:hover::before,.mnav a:hover::after,.mnav a.on::before,.mnav a.on::after{transform:scaleX(1)}
+.mnav a:hover,.mnav a.on{z-index:1}
+.mnav a:hover span,.mnav a.on span{translate:35.68px 0}
+.mnav a:hover i,.mnav a.on i{opacity:1;scale:1}
+.mlbl{font:500 16px/20px var(--sans);color:#B9B9B9}
+.mbig{font:600 28px/34px var(--sans);text-decoration:none;white-space:nowrap}
+.soc{position:absolute;top:824px;width:60px;height:60px;border-radius:50%;background:#382D3A;transition:background .2s}
+.soc:hover{background:#4A3D4D}
+.soc img{position:absolute}
+/* пункты меню выезжают по очереди */
+.mmenu .rise{transition-duration:.6s}
+.menu-open .mmenu .rise{opacity:1;translate:0 0}
+
+/* ---------- Мобильный прелоудер: вертикальная шкала по центру ---------- */
+.m .pre{background:var(--ink);transition:transform .7s cubic-bezier(.7,0,.2,1)}
+.m .pre-top,.m .pre-btm{position:static;background:none;transform:none!important}
+.m .pre-top img{left:30px;top:50px;bottom:auto;width:153.63px;height:42px}
+.m .pre-bar{left:219px;right:auto;top:calc(50% - 130px);bottom:auto;width:1px;height:380px}
+.m .pre-bar b{position:absolute;left:0;bottom:0;width:100%;height:calc(var(--p,0)*1%)}
+.m .pre-pct{font-weight:400;left:0;right:0;top:calc(50% - 250.08px);bottom:auto;text-align:center;font-size:96px;line-height:96px;letter-spacing:1.43px}
+.m .pre-pct small{margin-left:9.55px;font-size:36px}
+.m .pre.done{transform:translateY(-100%)}
+.m440 .pre,.m440 .mmenu{right:auto;width:440px}
+
+/* =================== Прототип: блоки 2–12 в стиле концепта ===================
+   Первые два экрана — из концепта без изменений. Остальное дорисовано по его системе:
+   тёмные и светлые секции, линии 1 px, диагонали 45°, скошенные углы, коралловые кнопки,
+   JetBrains Mono для цифр и меток, Manrope для текста. */
+.sec{position:relative;padding:150px 50px;scroll-margin-top:100px;overflow:hidden}
+.sec.dark{background:var(--ink);color:#fff;--line:var(--ink-line);--mut:#B9B9B9;--fill:#fff;--on-fill:var(--ink)}
+.sec.light{background:#fff;color:var(--ink);--line:var(--panel-line);--mut:#77727A;--fill:var(--ink);--on-fill:#fff}
+.sec.grey{background:var(--panel);color:var(--ink);--line:var(--panel-line);--mut:#77727A;--fill:var(--ink);--on-fill:#fff}
+.sec.ruled{border-top:1px solid var(--line)}
+.sec svg.deco{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.sec>*:not(svg){position:relative}
+
+.eb{display:flex;align-items:center;gap:20px;font:300 14px/20px var(--mono);letter-spacing:.03em;color:var(--mut)}
+.eb::after{content:"";width:60px;height:1px;background:currentColor;opacity:.6}
+.shead{display:grid;grid-template-columns:970px 1fr;align-items:end;margin-bottom:80px}
+.shead h2{margin-top:30px;max-width:900px;font:500 48px/53px var(--sans);letter-spacing:-2px}
+.sl{max-width:560px;font:400 14px/20px var(--sans);letter-spacing:.03em;color:var(--mut)}
+.mono{font-family:var(--mono);font-weight:300}
+.mut{color:var(--mut)}
+
+/* кнопки */
+.b{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:50px;min-width:220px;padding:0 40px;border:0;
+  font:400 14px/20px var(--sans);letter-spacing:.03em;text-decoration:none;cursor:pointer;color:inherit;background:none;
+  transition:background .2s,color .2s,border-color .2s,opacity .2s}
+.b-coral{background:var(--coral);color:#fff}
+.b-coral:hover{background:#E04634}
+.b-coral.go::after{content:"";width:10px;height:10px;background:url(img/arrow-ne.svg) center/contain no-repeat}
+.b-line{border:1px solid var(--line)}
+.b-line:hover{background:var(--fill);color:var(--on-fill);border-color:var(--fill)}
+.b-sm{height:40px;min-width:0;padding:0 20px}
+.b-block{width:100%}
+.b:disabled{opacity:.35;cursor:default;pointer-events:none}
+.acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:60px}
+
+/* метки, заглушки */
+.tg{display:inline-flex;align-items:center;height:30px;padding:0 12px;border:1px solid var(--line);font:300 12px/16px var(--mono);letter-spacing:.03em;white-space:nowrap}
+.tg.coral{background:var(--coral);border-color:var(--coral);color:#fff}
+.cut{clip-path:polygon(0 0,calc(100% - 30px) 0,100% 30px,100% 100%,30px 100%,0 calc(100% - 30px))}
+.cut-s{clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px))}
+.phx{position:relative;display:grid;place-items:center;padding:20px;overflow:hidden;background:#2B262D;color:#8C858D;
+  font:300 12px/17px var(--mono);letter-spacing:.03em;text-align:center}
+.light .phx,.grey .phx,dialog .phx,.formcard .phx{background:#E7E5E3;color:#8F8A86}
+.phx::before{content:"";position:absolute;inset:0;opacity:.35;
+  background:linear-gradient(to top right,transparent calc(50% - .5px),currentColor calc(50% - .5px),currentColor calc(50% + .5px),transparent calc(50% + .5px))}
+.phx>span{position:relative;padding:6px 10px;background:inherit}
+.pic{position:relative;overflow:hidden;background:#D9D9D9}
+.pic img{width:100%;height:100%;object-fit:cover;transition:scale .8s var(--ease)}
+.play{position:absolute;left:50%;top:50%;width:70px;height:70px;margin:-35px 0 0 -35px;border-radius:50%;background:#fff;display:grid;place-items:center}
+.play::before{content:"";margin-left:5px;border-left:16px solid var(--ink);border-top:10px solid transparent;border-bottom:10px solid transparent}
+.tx{padding-left:14px;border-left:1px solid var(--coral);font:300 13px/19px var(--mono);letter-spacing:.02em;color:var(--mut)}
+.stars{color:var(--coral);letter-spacing:.1em}
+
+/* ---------- 2. Маршрут ---------- */
+.route{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.st{position:relative;padding:50px 40px 60px;border-left:1px solid var(--line)}
+.st:first-child{border-left:0;padding-left:0}
+.st::before{content:"";position:absolute;left:-4px;top:-4px;width:7px;height:7px;background:var(--coral);transform:rotate(45deg)}
+.st:first-child::before{left:0}
+.st-n{font:300 64px/64px var(--mono);letter-spacing:.03em;transition:color .3s}
+.st:hover .st-n{color:var(--coral)}
+.st h3{margin:50px 0 16px;font:500 28px/34px var(--sans);letter-spacing:-1px}
+.st-k{display:block;margin:34px 0 10px;font:300 12px/16px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+.st p{font:400 14px/21px var(--sans);letter-spacing:.03em}
+.st .worry{color:var(--mut)}
+
+/* ---------- 4. Квиз ---------- */
+.promo{display:flex;align-items:center;gap:20px;margin-bottom:10px;padding:0 0 0 0;font:400 14px/20px var(--sans);letter-spacing:.03em}
+.qwrap{display:grid;grid-template-columns:1220px 1fr;gap:10px}
+.quiz{position:relative;display:flex;flex-direction:column;min-height:780px;padding:60px 70px;background:var(--panel)}
+.qhead{display:flex;align-items:center;gap:30px;margin-bottom:50px;font:300 14px/20px var(--mono);letter-spacing:.03em}
+.progress{flex:1;height:1px;background:var(--panel-line)}
+.progress span{display:block;height:100%;width:0;background:var(--coral);transition:width .5s var(--ease)}
+.q-step{display:none}
+.q-step.active{display:block;animation:qin .5s var(--ease)}
+@keyframes qin{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.qtag{display:inline-flex;align-items:center;gap:10px;font:300 12px/16px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+.qtag::before{content:"";width:7px;height:7px;background:var(--coral);transform:rotate(45deg)}
+.q-title{margin:20px 0 34px;font:500 36px/42px var(--sans);letter-spacing:-1.2px}
+.olist{counter-reset:o}
+.option{counter-increment:o;position:relative;display:flex;align-items:center;gap:24px;width:100%;min-height:64px;margin-top:-1px;padding:12px 30px;
+  border:1px solid var(--panel-line);background:#fff;color:var(--ink);text-align:left;font:400 16px/22px var(--sans);letter-spacing:.02em;cursor:pointer;
+  transition:background .2s,color .2s,border-color .2s}
+.option::before{content:counter(o,decimal-leading-zero);font:300 13px/16px var(--mono);color:var(--mut)}
+.option:hover{border-color:var(--ink);z-index:1}
+.option[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff;z-index:1}
+.option[aria-pressed="true"]::before{color:var(--coral)}
+.hint{margin-top:16px;font:300 12px/17px var(--mono);letter-spacing:.02em;color:var(--mut)}
+.tip{display:flex;gap:14px;align-items:center;margin-top:24px;padding:16px 20px;border:1px dashed var(--panel-line);font:400 14px/20px var(--sans);letter-spacing:.02em}
+.tip svg{color:var(--coral)}
+.nexts{margin:6px 0 34px;list-style:none;display:grid;gap:12px}
+.nexts li{display:flex;gap:16px;align-items:baseline;font:400 16px/22px var(--sans)}
+.nexts li::before{content:"";flex:none;width:7px;height:7px;background:var(--coral);transform:rotate(45deg) translateY(-2px)}
+.nexts .n{font:300 13px var(--mono);color:var(--coral)}
+.form{display:grid;gap:24px}
+.field{display:grid;gap:10px}
+.label{font:300 12px/16px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+.input{width:100%;height:56px;padding:0 20px;border:1px solid var(--line, #CFCFCF);background:#fff;color:var(--ink);font:400 16px var(--sans);letter-spacing:.02em;outline:none;border-radius:0}
+.input:focus{border-color:var(--ink)}
+.input.invalid{border-color:var(--coral)}
+.error{display:none;font:300 12px var(--mono);color:var(--coral)}
+.error.show{display:block}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+button.chip{display:inline-flex;align-items:center;width:auto;height:40px;padding:0 18px;border:1px solid var(--line, #CFCFCF);background:none;color:inherit;
+  font:300 13px/16px var(--mono);letter-spacing:.03em;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+button.chip:hover{border-color:var(--fill, var(--ink))}
+button.chip[aria-pressed="true"]{background:var(--fill, var(--ink));color:var(--on-fill, #fff);border-color:var(--fill, var(--ink))}
+.check{display:flex;gap:14px;align-items:flex-start;font:400 12px/17px var(--sans);letter-spacing:.02em;color:var(--mut);cursor:pointer}
+.check input{appearance:none;-webkit-appearance:none;flex:none;width:18px;height:18px;margin:0;border:1px solid var(--line, #CFCFCF);background:#fff;cursor:pointer}
+.check input:checked{background:var(--coral) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M4.5 9.2l3 3 6-6.4' fill='none' stroke='%23fff' stroke-width='1.6'/%3E%3C/svg%3E") center/100% no-repeat;border-color:var(--coral)}
+.check a{color:inherit}
+.drop{display:grid;justify-items:start;gap:8px;margin-top:14px;padding:26px 30px;border:1px dashed #BDB8B4;background:#fff;cursor:pointer;font:400 16px var(--sans)}
+.drop:hover{border-color:var(--ink)}
+.drop svg{color:var(--coral)}
+.files{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;font:300 12px var(--mono)}
+.qfoot{display:flex;justify-content:space-between;gap:10px;margin-top:auto;padding-top:40px}
+.qfoot .right{display:flex;gap:10px}
+.qfoot[hidden]{display:none}
+.ok{display:grid;place-items:center;width:56px;height:56px;background:var(--coral);color:#fff}
+.gets{position:relative;display:flex;flex-direction:column;padding:60px 50px 0;background:var(--ink);color:#fff;overflow:hidden}
+.gets h3{font:500 36px/42px var(--sans);letter-spacing:-1.2px}
+.gets ol{list-style:none;margin:50px 0 60px;border-top:1px solid var(--ink-line)}
+.gets li{display:grid;grid-template-columns:60px 1fr;padding:24px 0;border-bottom:1px solid var(--ink-line)}
+.gets li b{display:block;font:500 20px/26px var(--sans);letter-spacing:-.4px}
+.gets li span.n{font:300 14px/26px var(--mono);color:var(--coral)}
+.gets li small{display:block;margin-top:6px;font:400 14px/20px var(--sans);letter-spacing:.03em;color:#B9B9B9}
+.gets .pic{margin:auto -50px 0;height:280px}
+
+/* ---------- 5. Дизайнеры ---------- */
+.dgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.ds{display:flex;flex-direction:column}
+.ds .phx{height:520px}
+.ds h3{margin:34px 0 16px;font:500 32px/38px var(--sans);letter-spacing:-1.2px}
+.ds .tx{margin-bottom:34px}
+.dthumbs{display:flex;gap:10px;margin:14px 0 34px}
+.dthumb{width:130px;height:130px;padding:0;border:0;cursor:pointer;opacity:.7;transition:opacity .25s}
+.dthumb:hover{opacity:1}
+.dthumb img{width:100%;height:100%;object-fit:cover}
+.ds .b{margin-top:auto}
+
+/* ---------- 6. Производство ---------- */
+.facts{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.fact{padding:50px 40px 54px;border-left:1px solid var(--line)}
+.fact:first-child{border-left:0;padding-left:0}
+.fact .big{font:300 72px/72px var(--mono);letter-spacing:-.02em;white-space:nowrap}
+.fact .big small{font-size:28px;letter-spacing:0}
+.fact p{margin-top:24px;max-width:340px;font:400 14px/20px var(--sans);letter-spacing:.03em;color:var(--mut)}
+.plines{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.pline{position:relative;padding:50px;border:1px solid var(--line)}
+.pline h3{margin:30px 0 14px;font:500 32px/38px var(--sans);letter-spacing:-1.2px}
+.pline p{max-width:620px;font:400 14px/20px var(--sans);letter-spacing:.03em;color:var(--mut)}
+.pline .k{position:absolute;right:50px;top:50px;font:300 64px/64px var(--mono);color:var(--ink-line)}
+.media{display:grid;grid-template-columns:1210px 1fr;grid-template-rows:295px 295px;gap:10px}
+.media .v{grid-row:span 2}
+.media .v span{position:absolute;left:30px;bottom:30px}
+
+/* ---------- 7. О компании ---------- */
+.awards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:80px}
+.awards .phx{height:300px}
+.adv{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}
+.adv>div{padding:44px 50px 50px 0;border-bottom:1px solid var(--line)}
+.adv>div:not(:nth-child(3n+1)){padding-left:50px;border-left:1px solid var(--line)}
+.adv svg{width:32px;height:32px;color:var(--coral)}
+.adv h4{margin:34px 0 12px;font:500 22px/28px var(--sans);letter-spacing:-.6px}
+.adv p{max-width:440px;font:400 14px/20px var(--sans);letter-spacing:.03em;color:var(--mut)}
+.footnote{margin-top:30px;max-width:1200px;font:300 11px/16px var(--mono);letter-spacing:.02em;color:var(--mut)}
+
+/* ---------- 8. Отзывы ---------- */
+.rating{display:grid;grid-template-columns:auto 1fr auto;align-items:end;gap:50px;padding-bottom:50px;margin-bottom:50px;border-bottom:1px solid var(--line)}
+.score{font:500 160px/120px var(--sans);letter-spacing:-8px}
+.rating .stars{font-size:28px}
+.rating .meta{margin-top:14px;font:300 14px/20px var(--mono);letter-spacing:.03em;color:var(--mut)}
+.rating .row{display:flex;gap:10px}
+.tabs{display:flex;gap:40px;margin-bottom:40px}
+.tab{position:relative;padding:0 0 12px;border:0;background:none;color:var(--mut);font:300 14px/20px var(--mono);letter-spacing:.03em;cursor:pointer}
+.tab::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--coral);transform:scaleX(0);transform-origin:0 50%;transition:transform .4s var(--ease)}
+.tab[aria-selected="true"]{color:var(--ink)}
+.tab[aria-selected="true"]::after{transform:none}
+.rgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.rv{background:#fff}
+.rv[hidden]{display:none}
+.rv .pic{height:380px}
+.rv .body{display:grid;gap:18px;padding:34px 40px 40px}
+.rv .top{display:flex;justify-content:space-between;align-items:center;font:500 20px/26px var(--sans);letter-spacing:-.4px}
+.rv .meta{display:flex;gap:10px;font:300 12px/16px var(--mono);color:var(--mut)}
+.rv .meta a{color:inherit}
+
+/* ---------- 9. Полезное ---------- */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:40px}
+.hs{display:flex;gap:10px;margin:0 -50px;padding:0 50px 10px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 50px;scrollbar-width:none}
+.hs::-webkit-scrollbar{display:none}
+.uc{flex:0 0 440px;scroll-snap-align:start;padding:0;border:0;background:none;color:inherit;text-align:left;cursor:pointer}
+.uc[hidden]{display:none}
+.uc .pic{height:300px}
+.uc:hover .pic img{scale:1.05}
+.uc .tg{margin:24px 0 14px}
+.uc b{display:block;font:500 22px/28px var(--sans);letter-spacing:-.6px}
+
+/* ---------- 10. Шкафы ---------- */
+.strip{display:flex;align-items:center;justify-content:space-between;gap:40px;padding:60px 70px;border:1px solid var(--line)}
+.strip p{font:500 32px/38px var(--sans);letter-spacing:-1.2px;max-width:1000px}
+.strip .b::after{content:"";width:10px;height:10px;background:currentColor;
+  -webkit-mask:url(img/arrow-ne.svg) center/contain no-repeat;mask:url(img/arrow-ne.svg) center/contain no-repeat}
+
+/* ---------- 11. Контакты ---------- */
+.cgrid{display:grid;grid-template-columns:1fr 820px;gap:10px}
+.info dl{border-top:1px solid var(--line)}
+.info dl>div{display:grid;grid-template-columns:240px 1fr;align-items:baseline;padding:26px 0;border-bottom:1px solid var(--line)}
+.info dt{font:300 13px/20px var(--mono);letter-spacing:.03em;color:var(--mut)}
+.info dd{font:500 24px/30px var(--sans);letter-spacing:-.6px}
+.info dd a{color:inherit;text-decoration:none}
+.info .opts{margin-top:2px}
+.info .map{height:340px;margin-top:40px}
+.formcard{--line:#CFCFCF;--mut:#77727A;--fill:var(--ink);--on-fill:#fff;padding:60px 70px;background:var(--panel);color:var(--ink)}
+.formcard h3{font:500 36px/42px var(--sans);letter-spacing:-1.2px}
+.formcard .sub{margin-top:14px;font:400 14px/20px var(--sans);letter-spacing:.03em;color:var(--mut)}
+.success{display:none;gap:20px;justify-items:start}
+.success.show{display:grid}
+.success h3{font:500 36px/42px var(--sans);letter-spacing:-1.2px}
+
+/* ---------- 12. Подвал ---------- */
+.footer{padding:80px 50px 50px;background:var(--ink);color:#fff;border-top:1px solid var(--ink-line)}
+.fgrid{display:grid;grid-template-columns:830px repeat(3,1fr);gap:20px}
+.fgrid img{width:139px;height:38px}
+.fgrid .k{display:block;margin-bottom:20px;font:300 12px/16px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:#B9B9B9}
+.fgrid a{display:block;margin-bottom:12px;color:#fff;text-decoration:none;font:400 14px/20px var(--sans);letter-spacing:.03em}
+.fgrid a:hover{color:var(--coral)}
+.legal{margin-top:30px;font:300 12px/18px var(--mono);letter-spacing:.02em;color:#B9B9B9}
+.fbottom{display:flex;justify-content:space-between;margin-top:80px;padding-top:30px;border-top:1px solid var(--ink-line);font:300 12px var(--mono);color:#77727A}
+.fbottom a{color:inherit}
+
+/* ---------- Cookie ---------- */
+.cookie{position:fixed;left:20px;bottom:20px;z-index:40;display:flex;align-items:center;gap:30px;padding:20px 20px 20px 30px;background:rgba(56,49,58,.85);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:#fff;font:400 13px/18px var(--sans);letter-spacing:.02em;--line:rgba(255,255,255,.3);--fill:#fff;--on-fill:var(--ink)}
+.cookie a{color:inherit}
+.cookie .row{display:flex;gap:8px}
+.cookie.hide{display:none}
+html.loading .cookie{opacity:0}
+
+/* ---------- Окна ---------- */
+dialog{--line:#CFCFCF;--mut:#77727A;--fill:var(--ink);--on-fill:#fff;margin:auto;width:900px;max-width:calc(100% - 40px);max-height:calc(100% - 40px);padding:0;border:0;
+  background:#fff;color:var(--ink);overflow:auto}
+dialog::backdrop{background:rgba(31,27,32,.72);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+dialog[open]{animation:din .45s var(--ease)}
+@keyframes din{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+dialog.narrow{width:600px}
+.dlg-head{position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 20px 20px 40px;background:#fff;border-bottom:1px solid var(--line)}
+.dlg-head b{font:500 22px/28px var(--sans);letter-spacing:-.6px}
+.x{position:relative;flex:none;width:50px;height:50px;border:1px solid var(--line);background:none;cursor:pointer}
+.x::before,.x::after{content:"";position:absolute;left:14px;top:24px;width:20px;height:1px;background:var(--ink);transform:rotate(45deg)}
+.x::after{transform:rotate(-45deg)}
+.x:hover{border-color:var(--ink)}
+.dlg-body{padding:40px}
+.dlg-foot{position:sticky;bottom:0;display:flex;justify-content:space-between;gap:10px;padding:20px 40px;background:#fff;border-top:1px solid var(--line)}
+.dstack{display:grid;gap:10px}
+.story{display:grid;gap:40px}
+.story h3{font:500 40px/46px var(--sans);letter-spacing:-1.6px}
+.story .prm{display:flex;gap:20px;margin-top:16px;font:300 14px/20px var(--mono);letter-spacing:.03em}
+.story .prm i{width:1px;background:rgba(31,27,32,.2)}
+.story h4{margin-bottom:12px;font:500 18px/24px var(--sans);letter-spacing:-.3px}
+.story .two{display:grid;grid-template-columns:1fr 1fr;gap:34px 40px}
+.ba{position:relative;height:460px;overflow:hidden;user-select:none;--v:50%}
+.ba img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.ba .after{clip-path:inset(0 0 0 var(--v))}
+.ba .ln2{position:absolute;top:0;bottom:0;left:var(--v);width:1px;background:rgba(255,255,255,.7);pointer-events:none}
+.ba .hd{position:absolute;left:var(--v);top:50%;width:41px;height:41px;margin:-20.5px 0 0 -20px;border-radius:50%;background:#fff;display:grid;place-items:center;pointer-events:none}
+.ba .hd img{position:static;width:17px;height:10px}
+.ba input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.ba .lbl{position:absolute;top:20px;padding:6px 10px;background:rgba(31,27,32,.7);color:#fff;font:300 12px var(--mono);letter-spacing:.03em}
+.carousel{position:relative}
+.carousel .view{height:460px;background:#D9D9D9 center/cover no-repeat;transition:background-image .3s}
+.carousel .cnt{position:absolute;left:20px;bottom:20px;padding:6px 10px;background:rgba(31,27,32,.7);color:#fff;font:300 12px var(--mono)}
+.car-btn{position:absolute;bottom:20px;width:50px;height:50px;border:0;background:#fff;display:grid;place-items:center;cursor:pointer}
+.car-btn i{width:15px;height:15px;background:var(--ink);-webkit-mask:url(img/arrow-left.svg) center/contain no-repeat;mask:url(img/arrow-left.svg) center/contain no-repeat}
+.car-prev{right:80px}
+.car-next{right:20px}
+.car-next i{-webkit-mask-image:url(img/arrow-right.svg);mask-image:url(img/arrow-right.svg)}
+.msgs .b{justify-content:space-between;padding:0 30px}
+.msgs .b::after{content:"";width:10px;height:10px;background:currentColor;-webkit-mask:url(img/arrow-ne.svg) center/contain no-repeat;mask:url(img/arrow-ne.svg) center/contain no-repeat}
+
+/* =================== Прототип на телефоне (кадр 440) =================== */
+.m .sec{padding:90px 30px;scroll-margin-top:0}
+.m .shead{display:block;margin-bottom:44px}
+.m .shead h2{margin-top:20px;font:500 28px/34px var(--sans);letter-spacing:-.02em}
+.m .sl{margin-top:18px;font-size:12px;line-height:17px}
+.m .acts{flex-direction:column;margin-top:40px}
+.m .acts .b{width:100%}
+.m .b{padding:0 24px}
+.m .route{grid-template-columns:1fr;border-bottom:0}
+.m .st{padding:34px 0 40px;border-left:0;border-bottom:1px solid var(--line)}
+.m .st::before{left:0}
+.m .st-n{font-size:40px;line-height:40px}
+.m .st h3{margin:28px 0 12px;font-size:22px;line-height:28px;letter-spacing:-.6px}
+.m .st-k{margin-top:22px}
+.m .st p{font-size:13px;line-height:19px}
+.m .promo{flex-wrap:wrap;gap:12px;font-size:13px;line-height:18px}
+.m .qwrap{grid-template-columns:1fr}
+.m .quiz{min-height:0;padding:34px 20px 24px;margin:0 -30px}
+.m .qhead{margin-bottom:34px}
+.m .q-title{margin:14px 0 24px;font-size:24px;line-height:30px;letter-spacing:-.8px}
+.m .option{gap:14px;min-height:56px;padding:12px 16px;font-size:14px;line-height:19px}
+.m .qfoot{flex-wrap:wrap;padding-top:30px}
+.m .qfoot .b{min-width:0;padding:0 18px}
+.m .qfoot .right{margin-left:auto}
+.m .gets{margin:0 -30px;padding:44px 30px 0}
+.m .gets h3{font-size:24px;line-height:30px}
+.m .gets ol{margin:30px 0 40px}
+.m .gets .pic{margin:auto -30px 0;height:220px}
+.m .drop{padding:20px}
+.m .dgrid,.m .rgrid{display:flex;gap:10px;margin:0 -30px;padding:0 30px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 30px;scrollbar-width:none}
+.m .dgrid::-webkit-scrollbar,.m .rgrid::-webkit-scrollbar{display:none}
+.m .ds,.m .rv{flex:0 0 330px;scroll-snap-align:start}
+.m .ds .phx{height:400px}
+.m .ds h3{margin:24px 0 12px;font-size:22px;line-height:28px}
+.m .dthumb{width:96px;height:96px}
+.m .facts{grid-template-columns:1fr 1fr}
+.m .fact{padding:30px 0 34px;border-left:0}
+.m .fact:nth-child(even){padding-left:20px;border-left:1px solid var(--line)}
+.m .fact:nth-child(-n+2){border-bottom:1px solid var(--line)}
+.m .fact .big{font-size:40px;line-height:40px}
+.m .fact .big small{font-size:18px}
+.m .fact p{margin-top:16px;font-size:12px;line-height:17px}
+.m .plines{grid-template-columns:1fr}
+.m .pline{padding:30px}
+.m .pline h3{margin:20px 0 10px;font-size:22px;line-height:28px}
+.m .pline .k{right:30px;top:30px;font-size:40px;line-height:40px}
+.m .media{grid-template-columns:1fr 1fr;grid-template-rows:240px 160px}
+.m .media .v{grid-column:span 2;grid-row:auto}
+.m .awards{grid-template-columns:1fr 1fr;margin-bottom:50px}
+.m .awards .phx{height:180px}
+.m .adv{grid-template-columns:1fr}
+.m .adv>div,.m .adv>div:not(:nth-child(3n+1)){padding:30px 0;border-left:0}
+.m .adv h4{margin:20px 0 10px;font-size:20px;line-height:26px}
+.m .rating{grid-template-columns:1fr;gap:24px}
+.m .score{font-size:96px;line-height:80px;letter-spacing:-4px}
+.m .rating .row{flex-wrap:wrap}
+.m .tabs{gap:30px}
+.m .rv .pic{height:240px}
+.m .rv .body{padding:24px}
+.m .hs{margin:0 -30px;padding:0 30px 10px;scroll-padding:0 30px}
+.m .uc{flex-basis:320px}
+.m .uc .pic{height:220px}
+.m .uc b{font-size:20px;line-height:26px}
+.m .strip{flex-direction:column;align-items:flex-start;padding:34px 30px}
+.m .strip p{font-size:22px;line-height:28px;letter-spacing:-.6px}
+.m .strip .b{width:100%}
+.m .cgrid{grid-template-columns:1fr}
+.m .info dl>div{grid-template-columns:1fr;gap:8px;padding:20px 0}
+.m .info dd{font-size:20px;line-height:26px}
+.m .info .map{height:220px;margin-bottom:10px}
+.m .formcard{margin:0 -30px;padding:40px 30px}
+.m .formcard h3,.m .success h3{font-size:24px;line-height:30px}
+.m .footer{padding:60px 30px 40px}
+.m .fgrid{grid-template-columns:1fr 1fr;gap:40px 20px}
+.m .fgrid>div:first-child{grid-column:span 2}
+.m .fbottom{flex-direction:column;gap:10px;margin-top:50px}
+.m .cookie{left:10px;right:10px;bottom:10px;flex-direction:column;align-items:stretch;gap:14px;padding:18px}
+.m .cookie .b{flex:1}
+.m dialog{width:100%;max-width:100%;height:100%;max-height:100%;margin:0}
+.m dialog.narrow{height:auto;margin:auto 0 0}
+.m .dlg-head{padding:15px 15px 15px 24px}
+.m .dlg-head b{font-size:18px;line-height:24px}
+.m .dlg-body{padding:24px}
+.m .dlg-foot{flex-wrap:wrap;padding:15px 24px}
+.m .dlg-foot .b{flex:1;min-width:0;padding:0 16px}
+.m .story h3{font-size:26px;line-height:32px;letter-spacing:-.8px}
+.m .story .two{grid-template-columns:1fr;gap:24px}
+.m .ba,.m .carousel .view{height:300px}
+</style>
+<script>
+  // Макет нарисован в ширину 1920 (десктоп) и 440 (телефон): масштабируем страницу целиком, чтобы пропорции совпадали с Figma
+  function fit(){
+    const fix=location.search.includes('m440'); // для сверки: мобильный макет без масштаба
+    const m=fix||innerWidth<768,h=document.documentElement;
+    h.classList.toggle('m',m);h.classList.toggle('m440',fix);h.style.zoom=fix?1:innerWidth/(m?440:1920);
+    if(window.capfix)document.querySelectorAll('.split:not([data-capfix])').forEach(el=>el.offsetHeight&&capfix(el));
+  }
+  fit();addEventListener('resize',fit);
+  document.documentElement.classList.add('loading');
+</script>
+</head>
+<body id="top">
+
+<div class="pre" id="pre">
+  <div class="pre-top"><img src="img/logo.svg" alt=""><div class="pre-bar"><b id="preBar"></b></div></div>
+  <div class="pre-btm">
+    <div class="pre-pct trim"><span id="prePct">0</span><small>%</small></div>
+  </div>
+</div>
+
+<header class="header d-only">
+  <img class="abs logo" src="img/logo.svg" alt="Камчатский дом мебели">
+  <nav class="t14">
+    <a class="trim" href="#route">Как работаем</a>
+    <a class="trim" href="#projects">Проекты</a>
+    <a class="trim" href="#designers">Дизайнеры</a>
+    <a class="trim" href="#production">Производство</a>
+    <a class="trim" href="#reviews">Отзывы</a>
+    <a class="trim" href="#contacts">Контакты</a>
+    <span class="sep"></span>
+    <a class="trim u" href="tel:+79245858263">+7 (924) 585-82-63</a>
+    <a class="btn" href="#quiz-block" data-open="quiz"><span class="trim">Рассчитать кухню</span><img src="img/arrow-ne.svg" alt=""></a>
+  </nav>
+</header>
+
+<section class="hero d-only">
+  <svg class="lines" viewBox="0 0 1920 1080" aria-hidden="true">
+    <g fill="#353236">
+      <rect class="ln v" style="--d:.2s" x="830" y="0" width="1" height="682" shape-rendering="crispEdges"/>
+      <rect class="ln h" style="--d:.35s" x="0" y="534" width="684" height="1" shape-rendering="crispEdges"/>
+      <path class="ln bl" style="--d:.5s" d="M431.57 1079.29 L829.57 681.29 L830.28 682 L432.28 1080 Z"/>
+    </g>
+  </svg>
+
+  <div class="hero-media" id="heroMedia">
+    <div class="slide on"><img class="figma" src="img/hero-1.jpg" alt="Пара готовит на кухне"></div>
+    <div class="slide"><img src="img/hero-2.jpg" alt="Светлая кухня" loading="lazy"></div>
+    <div class="slide"><img src="img/project-1.jpg" alt="Угловая кухня" loading="lazy"></div>
+  </div>
+
+  <svg class="lines" viewBox="0 0 1920 1080" aria-hidden="true">
+    <path class="ln tl" style="--d:.6s" fill="#353236" d="M683.71 534.29 L1251.71 1102.29 L1251 1103 L683 535 Z"/>
+  </svg>
+
+  <h1 class="abs h48 trim split" style="--d:.15s">Бесплатно измерим<br>квартиру и создадим<br>кухню под ваши<br>размеры</h1>
+  <p class="abs lead t14 trim rise" style="--d:.75s">Бесплатный замер и 3D-проект в трёх вариантах.<br>Привезём кухню с фабрики к вам домой и соберём.<br>Гарантия 24 месяца.</p>
+
+  <a class="btn rise" style="--d:.9s" href="#quiz-block" data-open="quiz"><span class="trim t14">Рассчитать кухню</span><img src="img/arrow-ne.svg" alt=""></a>
+  <a class="abs msg m14 u trim rise" style="--d:1s" href="#" data-open="messengers">или напишите в WhatsApp, Telegram или MAX</a>
+
+  <button class="arrow rise" style="left:905px;--d:1.05s" id="prev" aria-label="Предыдущее фото"><img src="img/arrow-left.svg" alt=""></button>
+  <button class="arrow rise" style="left:965px;--d:1.1s" id="next" aria-label="Следующее фото"><img src="img/arrow-right.svg" alt=""></button>
+
+  <div class="chips m16">
+    <div class="chip rise" style="--d:1.1s"><span class="trim">1850+ кухонь с 2015 года</span></div>
+    <div class="chip rise" style="--d:1.2s"><span class="trim">4,8· 230 отзывов</span></div>
+    <div class="chip rise" style="--d:1.3s"><span class="trim">Работаем по всему краю</span></div>
+  </div>
+</section>
+
+<section class="projects d-only" id="projects">
+  <div class="card">
+    <div class="card-photo rise" style="--d:0s">
+      <img id="cPhoto" src="img/project-1.jpg" alt="">
+      <div class="tag t14"><img src="img/arrow-turn.svg" alt=""><span class="trim fade" id="cTag">Угловая</span></div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 920 900" aria-hidden="true">
+        <g fill="#CFCFCF">
+          <rect class="ln h" style="--d:.2s" x="0" y="287" width="710" height="1" shape-rendering="crispEdges"/>
+          <rect class="ln v" style="--d:.1s" x="710" y="0" width="1" height="900" shape-rendering="crispEdges"/>
+          <rect class="ln v" style="--d:.4s" x="355" y="288" width="1" height="612" shape-rendering="crispEdges"/>
+          <path class="ln bl" style="--d:.6s" d="M355.34 823.29 L709.34 469.29 L710.05 470 L356.05 824 Z"/>
+        </g>
+      </svg>
+      <div class="fade" id="cText">
+        <h2 class="abs title h48 trim split" style="--d:.1s" id="cTitle">Светлая кухня<br>на Северо-Востоке</h2>
+        <div class="params m14 rise" style="--d:.45s">
+          <span class="trim" id="cArea">S = 9,4 м²</span><i></i><span class="trim" id="cDays">38 дней</span>
+        </div>
+        <div class="abs price trim rise" style="--d:.55s"><small>от </small><span id="cPrice">420 000 р</span></div>
+      </div>
+      <a class="btn rise" style="--d:.65s" href="#" onclick="openProject(active);return false"><span class="trim t14">Подробнее</span><img src="img/arrow-ne.svg" alt=""></a>
+      <a class="abs more m14 trim rise" style="--d:.75s" href="#" onclick="openProject(active);return false">Смотреть больше проектов →</a>
+
+      <div class="thumbs rise" style="--d:.3s" id="thumbs"></div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== Мобильная версия (кадры «iPhone 18 Pro Max - 2/3» и «menu») =================== -->
+<div class="m-only">
+<section class="mhero">
+  <svg class="lines" viewBox="0 0 440 1160" aria-hidden="true">
+    <g fill="#353236">
+      <rect class="ln h" style="--d:.2s" x="0" y="651" width="333" height="1" shape-rendering="crispEdges"/>
+      <path class="ln bl" style="--d:.45s" d="M536 447 L332 651 L332.71 651.71 L536.71 447.71 Z"/>
+      <path class="ln tl" style="--d:.65s" d="M385.71 599.29 L385 600 L524 739 L524.71 738.29 Z"/>
+    </g>
+  </svg>
+  <div class="mhero-media" id="mHeroMedia">
+    <div class="slide on"><img class="figma" src="img/hero-1.jpg" alt="Пара готовит на кухне"></div>
+    <div class="slide"><img src="img/hero-2.jpg" alt="Светлая кухня" loading="lazy"></div>
+    <div class="slide"><img src="img/project-1.jpg" alt="Угловая кухня" loading="lazy"></div>
+  </div>
+  <img class="abs mlogo" src="img/logo.svg" alt="Камчатский дом мебели">
+  <button class="burger" id="burger" aria-label="Открыть меню" aria-controls="mmenu" aria-expanded="false"><i></i><i></i><i></i></button>
+
+  <h1 class="abs h28 trim split" style="--d:.15s">Бесплатно измерим<br>квартиру и создадим<br>кухню под ваши размеры</h1>
+  <p class="abs lead t12 trim rise" style="--d:.7s">Бесплатный замер и 3D-проект в трёх вариантах.<br>Привезём кухню с фабрики к вам домой и соберём.<br>Гарантия 24 месяца.</p>
+  <a class="btn rise" style="--d:.85s" href="#quiz-block" data-open="quiz"><span class="trim t14">Рассчитать кухню</span><img src="img/arrow-ne.svg" alt=""></a>
+  <button class="arrow rise" style="left:300px;--d:.95s" id="mPrev" aria-label="Предыдущее фото"><img src="img/arrow-left.svg" alt=""></button>
+  <button class="arrow rise" style="left:360px;--d:1s" id="mNext" aria-label="Следующее фото"><img src="img/arrow-right.svg" alt=""></button>
+  <a class="abs msg m12 u trim rise" style="--d:1s" href="#" data-open="messengers">или напишите в WhatsApp, Telegram или MAX</a>
+
+  <div class="mchips m16 rise" style="--d:1.1s">
+    <div class="chip"><span class="trim">1850+ кухонь с 2015 года</span></div>
+    <div class="chip"><span class="trim">4,8· 230 отзывов</span></div>
+    <div class="chip"><span class="trim">Работаем по всему краю</span></div>
+  </div>
+</section>
+
+<section class="mprojects" id="mprojects">
+  <div class="mtrack rise" id="mTrack"></div>
+  <button class="marrow rise" style="left:30px;--d:.3s" id="mcPrev" aria-label="Предыдущий проект"><i></i></button>
+  <button class="marrow nx rise" style="left:90px;--d:.35s" id="mcNext" aria-label="Следующий проект"><i></i></button>
+  <div class="mdots rise" style="--d:.4s" id="mDots"></div>
+</section>
+
+<nav class="mmenu" id="mmenu" aria-label="Меню" aria-hidden="true">
+  <div class="in">
+    <img class="abs mlogo" src="img/logo.svg" alt="Камчатский дом мебели">
+    <button class="burger mclose" id="mclose" aria-label="Закрыть меню"><i></i><i></i></button>
+    <ul class="mnav" id="mnav">
+      <li><a class="rise" style="--d:0.08s" href="#contacts"><i></i><span class="trim">Контакты</span></a></li>
+      <li><a class="rise" style="--d:0.13s" href="#route"><i></i><span class="trim">Как работаем</span></a></li>
+      <li><a class="rise" style="--d:0.18s" href="#mprojects"><i></i><span class="trim">Проекты</span></a></li>
+      <li><a class="rise" style="--d:0.23s" href="#designers"><i></i><span class="trim">Дизайнеры</span></a></li>
+      <li><a class="rise" style="--d:0.28s" href="#production"><i></i><span class="trim">Производство</span></a></li>
+      <li><a class="rise" style="--d:0.33s" href="#reviews"><i></i><span class="trim">Отзывы</span></a></li>
+    </ul>
+    <p class="abs mlbl trim rise" style="left:32px;top:600.48px;--d:.4s">Контакты:</p>
+    <a class="abs mbig trim rise" style="left:32px;top:651.84px;--d:.45s" href="tel:+79539466269">+7 (953) 946 62-69</a>
+    <a class="abs mbig trim rise" style="left:32px;top:701.84px;--d:.5s" href="mailto:FlowerTeam@gmail.com">FlowerTeam@gmail.com</a>
+    <p class="abs mlbl trim rise" style="left:32px;top:792.48px;--d:.55s">Мы в соц.сетях:</p>
+    <a class="soc rise" style="left:30px;--d:.6s" href="#" aria-label="Telegram"><img src="img/tg.svg" alt="" style="left:19.5px;top:19px;width:21px;height:22px"></a>
+    <a class="soc rise" style="left:101px;--d:.65s" href="#" aria-label="WhatsApp"><img src="img/wa.svg" alt="" style="left:20px;top:20px;width:20px;height:20px"></a>
+  </div>
+</nav>
+</div>
+
+
+<!-- =================== Блоки 2–12 прототипа в стиле концепта =================== -->
+<main class="proto">
+
+<!-- 2. МАРШРУТ -->
+<section class="sec dark ruled" id="route" aria-labelledby="route-h">
+  <svg class="deco" aria-hidden="true" viewBox="0 0 700 700" style="left:auto;right:0;width:700px;height:700px"><path d="M700 0 L0 700" stroke="#353236"/></svg>
+  <div class="shead rise">
+    <div><div class="eb">03 / Как мы работаем</div><h2 id="route-h">Как мы делаем кухню: от&nbsp;первой встречи до&nbsp;сборки</h2></div>
+    <p class="sl">Перед заказом кухни обычно волнуют цена, размеры и сроки. Покажем путь по шагам: что происходит на каждом и сколько он занимает.</p>
+  </div>
+  <div class="route">
+    <div class="st rise" style="--d:.05s">
+      <div class="st-n">01</div><h3>Замер и проект</h3><span class="tg">1–5 дней</span>
+      <span class="st-k">Тревожит</span><p class="worry">Не знаю точных размеров. Боюсь, что ничего не влезет, а трубы и ниши всё испортят.</p>
+      <span class="st-k">Что делаем</span><p>Всё начинается с замера: мастер приедет к вам и учтёт всё, что влияет на размеры, от труб и ниш до места под холодильник. По этим данным дизайнер сделает 3D-проект в трёх вариантах по цене, и вы увидите, как кухня встанет в вашем помещении.</p>
+    </div>
+    <div class="st rise" style="--d:.15s">
+      <div class="st-n">02</div><h3>Договор</h3><span class="tg">1 день</span>
+      <span class="st-k">Тревожит</span><p class="worry">Подпишу договор, а сроки потом сдвинут.</p>
+      <span class="st-k">Что делаем</span><p>Когда проект выбран, мы подписываем договор. Срок прописан в нём, и мы его соблюдаем. А если не хочется платить всю сумму сразу, рассрочку 0&nbsp;% оформим в салоне за 5 минут.</p>
+    </div>
+    <div class="st rise" style="--d:.25s">
+      <div class="st-n">03</div><h3>Производство и&nbsp;доставка</h3><span class="tg">1–4 месяца</span>
+      <span class="st-k">Тревожит</span><p class="worry">Кухня нужна к переезду, а ждать придётся месяцами.</p>
+      <span class="st-k">Что делаем</span><p>Кухню мы делаем на производстве на Камчатке за 30 дней, поэтому за срок отвечаем сами. Пока она создаётся, мы поставим вам временную кухню, а когда всё будет готово, привезём заказ домой и соберём.</p>
+    </div>
+    <div class="st rise" style="--d:.35s">
+      <div class="st-n">04</div><h3>Монтаж</h3><span class="tg">1–3 дня</span>
+      <span class="st-k">Тревожит</span><p class="worry">Соберут криво, а потом не дозвонишься.</p>
+      <span class="st-k">Что делаем</span><p>Кухни мы монтируем сами и отвечаем за качество. На них действует гарантия 24 месяца, а если что-то окажется не так, исправим за свой счёт.</p>
+    </div>
+  </div>
+  <div class="acts rise">
+    <button class="b b-coral go" data-open="lead" data-topic="Запись на бесплатный 3D-проект">Получить бесплатный 3D-проект</button>
+    <button class="b b-line" data-open="quiz">Сначала узнать цену</button>
+  </div>
+</section>
+
+<!-- 4. КВИЗ -->
+<section class="sec light" id="quiz-block" aria-labelledby="quiz-h">
+  <div class="shead rise">
+    <div><div class="eb">04 / Расчёт кухни</div><h2 id="quiz-h">Рассчитайте кухню за&nbsp;1&nbsp;минуту</h2></div>
+    <p class="sl">Два коротких вопроса, затем контакт. Остальное — по желанию, фото — в конце и только если удобно.</p>
+  </div>
+  <div class="promo rise"><span class="tg coral">Акция</span><span>Подарок на выбор: варочная поверхность, смеситель или мойка. До 5 ноября</span></div>
+  <div class="qwrap rise">
+    <div class="quiz" id="quiz">
+      <div class="qhead" id="qHead"><span>Шаг <span id="qNum">1</span> / 6</span><div class="progress"><span id="qBar"></span></div></div>
+      <div class="quiz-body">
+        <div class="q-step" data-step="1">
+          <span class="qtag">Ваша ситуация</span>
+          <p class="q-title">Что у вас сейчас с кухней?</p>
+          <div class="olist" id="qSituation">
+            <button class="option" aria-pressed="false" data-v="Делаем ремонт и нужна новая кухня">Делаем ремонт и нужна новая кухня</button>
+            <button class="option" aria-pressed="false" data-v="Меняем старую кухню в квартире, где живём">Меняем старую кухню в квартире, где живём</button>
+            <button class="option" aria-pressed="false" data-v="Кухня маленькая или с нестандартной планировкой, готовые не подходят">Кухня маленькая или с нестандартной планировкой, готовые не подходят</button>
+            <button class="option" aria-pressed="false" data-v="Переезд или форс-мажор, кухня нужна к конкретной дате">Переезд или форс-мажор, кухня нужна к конкретной дате</button>
+            <button class="option" aria-pressed="false" data-v="Квартира под сдачу, нужно просто и недорого">Квартира под сдачу, нужно просто и недорого</button>
+          </div>
+          <p class="hint">Нажмите на вариант, и перейдём дальше.</p>
+        </div>
+        <div class="q-step" data-step="2">
+          <span class="qtag">Сроки</span>
+          <p class="q-title">К какому сроку нужна кухня?</p>
+          <div class="olist" id="qDeadline">
+            <button class="option" aria-pressed="false" data-v="В ближайший месяц">В ближайший месяц</button>
+            <button class="option" aria-pressed="false" data-v="Через 2–3 месяца">Через 2–3 месяца</button>
+            <button class="option" aria-pressed="false" data-v="Через полгода и позже">Через полгода и позже</button>
+            <button class="option" aria-pressed="false" data-v="Пока присматриваюсь">Пока присматриваюсь</button>
+          </div>
+          <div class="tip"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" style="flex:none"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg>Если кухня нужна срочно, на время изготовления мы поставим временную.</div>
+        </div>
+        <div class="q-step" data-step="3">
+          <span class="qtag">Ваш вариант готов</span>
+          <p class="q-title">Кухня именно для вас</p>
+          <p class="mut" id="qLeadLine" style="margin:-16px 0 24px"></p>
+          <ul class="nexts">
+            <li>Бесплатно измеряем кухню и делаем 3D-проект</li>
+            <li>Цена фиксируется на этапе согласования проекта</li>
+            <li>3D-проект кухни вы увидите в день замера</li>
+          </ul>
+          <form class="form" id="qContact" novalidate>
+            <div class="field"><span class="label">Как вам удобнее, чтобы мы связались?</span>
+              <div class="opts" data-method id="qMethod" role="group" aria-label="Способ связи">
+                <button type="button" class="chip" aria-pressed="false" data-v="Позвонить">Позвонить</button>
+                <button type="button" class="chip" aria-pressed="true" data-v="WhatsApp">WhatsApp</button>
+                <button type="button" class="chip" aria-pressed="false" data-v="Telegram">Telegram</button>
+                <button type="button" class="chip" aria-pressed="false" data-v="MAX">MAX</button>
+              </div>
+            </div>
+            <div class="field"><label class="label" for="qPhone">Ваш телефон, обязательно</label><input class="input" id="qPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__"><p class="error" id="qPhoneErr">Проверьте номер: после +7 нужно 10 цифр</p></div>
+            <label class="check"><input type="checkbox" id="qConsent" aria-label="Согласие на обработку персональных данных"> <span>Соглашаюсь на обработку персональных данных по <a href="privacy.html">политике</a> и <a href="privacy.html#consent">тексту согласия</a></span></label>
+            <p class="hint" style="margin:0">Мы свяжемся только по этой заявке.</p>
+          </form>
+        </div>
+        <div class="q-step" data-step="4">
+          <span class="qtag">Место замера</span>
+          <p class="q-title">Где нужен замер?</p>
+          <div class="olist" id="qPlace">
+            <button class="option" aria-pressed="false" data-v="Петропавловск-Камчатский">Петропавловск-Камчатский</button>
+            <button class="option" aria-pressed="false" data-v="Елизово">Елизово</button>
+            <button class="option" aria-pressed="false" data-v="Вилючинск">Вилючинск</button>
+            <button class="option" aria-pressed="false" data-v="Другой город или посёлок">Другой город или посёлок</button>
+          </div>
+          <p class="hint">Нажмите на вариант, и перейдём дальше.</p>
+        </div>
+        <div class="q-step" data-step="5">
+          <span class="qtag">Важно для вас · можно выбрать до двух</span>
+          <p class="q-title">Что для вас важнее всего в новой кухне?</p>
+          <div class="olist" id="qImportant">
+            <button class="option" aria-pressed="false" data-v="Чтобы готовить было удобно и всё под рукой">Чтобы готовить было удобно и всё под рукой</button>
+            <button class="option" aria-pressed="false" data-v="Чтобы уложиться в бюджет и понимать, за что плачу">Чтобы уложиться в бюджет и понимать, за что плачу</button>
+            <button class="option" aria-pressed="false" data-v="Чтобы сделали всё без моего участия">Чтобы сделали всё без моего участия</button>
+            <button class="option" aria-pressed="false" data-v="Чтобы было красиво, как на картинке">Чтобы было красиво, как на картинке</button>
+            <button class="option" aria-pressed="false" data-v="Чтобы фурнитура и материалы служили годами">Чтобы фурнитура и материалы служили годами</button>
+          </div>
+        </div>
+        <div class="q-step" data-step="6">
+          <span class="qtag">Проект кухни · необязательно</span>
+          <p class="q-title">У вас уже есть проект кухни?</p>
+          <div class="olist" id="qProject">
+            <button class="option" aria-pressed="false" data-v="Да, есть готовый проект и размеры">Да, есть готовый проект и размеры</button>
+            <button class="option" aria-pressed="false" data-v="Есть примерные размеры, но проекта нет">Есть примерные размеры, но проекта нет</button>
+            <button class="option" aria-pressed="false" data-v="Нужна помощь с самого начала">Нужна помощь с самого начала</button>
+          </div>
+          <p class="label" style="margin-top:30px">Пришлите фото кухни, план или проект, если есть</p>
+          <label class="drop">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M21 15v6H3v-6M17 8l-5-5-5 5M12 3v12"/></svg>
+            <b style="font-weight:500">Выбрать файлы</b>
+            <span class="hint" style="margin:0">Фото, план с размерами или картинка из интернета. До 20 МБ.</span>
+            <input type="file" accept="image/*,.pdf" multiple class="sr-only" id="qFiles" style="position:absolute;width:1px;height:1px;opacity:0">
+          </label>
+          <div class="files" id="qFileList"></div>
+          <p class="error" id="qFileErr">Файл больше 20 МБ. Сожмите фото или пришлите другое</p>
+          <p class="hint">Можно пропустить или прислать позже в мессенджер.</p>
+        </div>
+        <div class="q-step" data-step="7">
+          <span class="ok"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg></span>
+          <p class="q-title" style="margin-top:34px">Заявка у нас</p>
+          <p class="mut" id="qDoneText" style="margin:-16px 0 30px"></p>
+          <ul class="nexts">
+            <li><span class="n">01</span>Пришлём ориентир цены в трёх вариантах</li>
+            <li><span class="n">02</span>Договоримся о бесплатном замере в удобный день</li>
+            <li><span class="n">03</span>Сделаем 3D-проект, и вы увидите, как кухня встанет у вас</li>
+          </ul>
+          <div class="promo" style="margin:0"><span class="tg coral">Акция</span><span>Подарок на выбор закреплён за вами до 5 ноября</span></div>
+        </div>
+      </div>
+      <div class="qfoot" id="qFoot">
+        <button class="b b-line" id="qBack">Назад</button>
+        <div class="right">
+          <button class="b b-line" id="qSkip">Пропустить</button>
+          <button class="b b-coral" id="qNext">Дальше</button>
+        </div>
+      </div>
+    </div>
+    <aside class="gets">
+      <h3>Что вы получите</h3>
+      <ol>
+        <li><span class="n">01</span><span><b>Ориентир цены</b><small>в трёх ценовых вариантах</small></span></li>
+        <li><span class="n">02</span><span><b>3D-проект</b><small>по вашим размерам и пожеланиям</small></span></li>
+        <li><span class="n">03</span><span><b>Бесплатный замер</b><small>в удобный день: уточним размеры и всё учтём</small></span></li>
+      </ol>
+      <div class="pic cut"><img src="img/v2-render.jpg" alt="" loading="lazy"></div>
+    </aside>
+  </div>
+</section>
+
+<!-- 5. ДИЗАЙНЕРЫ -->
+<section class="sec light ruled" id="designers" aria-labelledby="designers-h">
+  <div class="shead rise">
+    <div><div class="eb">05 / Дизайнеры</div><h2 id="designers-h">Дизайнеры, которые создадут ваш проект</h2></div>
+    <p class="sl">Посмотрите проекты каждого и запишитесь в салон к тому, чей стиль вам ближе.</p>
+  </div>
+  <div class="dgrid" id="designersGrid"></div>
+</section>
+
+<!-- 6. ПРОИЗВОДСТВО -->
+<section class="sec dark" id="production" aria-labelledby="production-h">
+  <svg class="deco" aria-hidden="true" viewBox="0 0 600 600" style="top:auto;bottom:0;width:600px;height:600px"><path d="M0 600 L600 0" stroke="#353236"/></svg>
+  <div class="shead rise">
+    <div><div class="eb">06 / Производство</div><h2 id="production-h">Производство на Камчатке и&nbsp;материке</h2></div>
+    <p class="sl">Корпуса и фасады мы делаем сами на современном немецком оборудовании, на производстве на Камчатке и материке. Фурнитуру берём у Blum, Hettich и Häfele.</p>
+  </div>
+  <div class="facts rise">
+    <div class="fact"><div class="big">от 30</div><p>дней в среднем занимает изготовление на Камчатке, срок прописан в договоре</p></div>
+    <div class="fact"><div class="big">1850+</div><p>кухонь сделано с 2015 года, и ни одна не повторяет другую</p></div>
+    <div class="fact"><div class="big">3 <small>бренда</small></div><p>Blum, Hettich и Häfele: петли и направляющие, от которых зависят дверцы и ящики</p></div>
+    <div class="fact"><div class="big">24 <small>месяца</small></div><p>гарантия, если мы ведём заказ от 3D-проекта до сборки</p></div>
+  </div>
+  <div class="plines rise">
+    <div class="pline"><span class="tg coral">Камчатка</span><span class="k">01</span><h3>Когда важен срок</h3><p>Около 30 дней, срок прописан в договоре. Корпуса и фасады делаем на собственной фабрике.</p></div>
+    <div class="pline"><span class="tg">Санкт-Петербург</span><span class="k">02</span><h3>Когда важен бюджет и выбор</h3><p>Дешевле на 25&nbsp;%, с другим выбором материалов и цветов, но срок с доставкой 3–4 месяца.</p></div>
+  </div>
+  <div class="media rise">
+    <div class="phx v cut"><span>ВИДЕО · цех, 5–15 сек · мастер у станка</span><i class="play" aria-hidden="true"></i></div>
+    <div class="phx"><span>ФОТО · руки и деталь</span></div>
+    <div class="phx cut"><span>ФОТО · контроль качества</span></div>
+  </div>
+</section>
+
+<!-- 7. О КОМПАНИИ -->
+<section class="sec light" id="about" aria-labelledby="about-h">
+  <div class="shead rise">
+    <div><div class="eb">07 / О компании</div><h2 id="about-h">С 2015 года — 1850+ кухонь на&nbsp;Камчатке</h2></div>
+  </div>
+  <div class="awards rise">
+    <div class="phx cut-s"><span>НАГРАДА · конкурс Сбера</span></div>
+    <div class="phx cut-s"><span>НАГРАДА · «Торговля Камчатки»</span></div>
+    <div class="phx cut-s"><span>СЕРТИФИКАТ · официальный представитель Вардек</span></div>
+    <div class="phx cut-s"><span>[сертификат или награда]</span></div>
+  </div>
+  <div class="adv rise">
+    <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><h4>Гарантия 24 месяца</h4><p>Действует на кухни, которые мы создаём от 3D-проекта до сборки.</p></div>
+    <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg><h4>Исправим за свой счёт</h4><p>Если после монтажа что-то окажется не так, приедем и исправим.</p></div>
+    <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7M5.5 21a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM18.5 21a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/></svg><h4>Доставка в Камчатском крае</h4><p>Привезём в Петропавловск-Камчатский, Елизово, Вилючинск и посёлки края.</p></div>
+    <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg><h4>Временная кухня</h4><p>Поставим на время изготовления, чтобы вам было где готовить.</p></div>
+    <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M12 2l3 6.5 7 .8-5.2 4.8 1.4 7L12 17.6 5.8 21l1.4-7L2 9.3l7-.8z"/></svg><h4>Официальный представитель Вардек</h4><p>Единственная компания на Камчатке с таким статусом.</p></div>
+    <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M2 5h20v14H2zM2 10h20"/></svg><h4>Рассрочка 0&nbsp;%*</h4><p>На срок до 6 месяцев, без первого взноса. Оформим в салоне за 5 минут.</p></div>
+  </div>
+  <p class="footnote">* Рассрочку предоставляет ПАО Сбербанк, генеральная лицензия Банка России № 1481 от 11.08.2015. Условия: первоначальный взнос 0&nbsp;%, срок до 6 месяцев, переплата 0&nbsp;% за счёт скидки продавца. Требования к заёмщику: паспорт РФ, возраст от 18 лет. Не является публичной офертой. Подробности уточняйте у менеджеров в салоне.</p>
+  <div class="acts rise"><button class="b b-coral go" data-open="lead" data-topic="Заявка с блока «О компании»" data-title="Оставить заявку">Оставить заявку</button></div>
+</section>
+
+<!-- 8. ОТЗЫВЫ -->
+<section class="sec grey" id="reviews" aria-labelledby="reviews-h">
+  <div class="shead rise">
+    <div><div class="eb">08 / Отзывы</div><h2 id="reviews-h">Что о нас говорят клиенты</h2></div>
+    <p class="sl">Клиенты рассказывают, как прошёл заказ: от замера до сборки кухни.</p>
+  </div>
+  <div class="rating rise">
+    <div class="score">4,8</div>
+    <div><div class="stars">★★★★★</div><div class="meta">230 отзывов · 300+ оценок</div></div>
+    <div class="row">
+      <a class="b b-line b-sm" href="#" onclick="return false">Открыть в 2ГИС</a>
+      <a class="b b-line b-sm" href="#" onclick="return false">Открыть в Яндекс Картах</a>
+    </div>
+  </div>
+  <div class="tabs rise" role="tablist" aria-label="Тип отзывов">
+    <button class="tab" role="tab" aria-selected="true" data-rtab="video">Видеоотзывы</button>
+    <button class="tab" role="tab" aria-selected="false" data-rtab="photo">Фото и текст</button>
+  </div>
+  <div class="rgrid rise" id="reviewsGrid"></div>
+</section>
+
+<!-- 9. ПОЛЕЗНОЕ -->
+<section class="sec light" id="useful" aria-labelledby="useful-h">
+  <div class="shead rise">
+    <div><div class="eb">09 / Полезное</div><h2 id="useful-h">Что стоит знать до ремонта кухни</h2></div>
+    <p class="sl">Советы дизайнеров, проверенные мастера и материалы. Пригодится, даже если до заказа кухни ещё далеко.</p>
+  </div>
+  <div class="filters rise" role="group" aria-label="Категории">
+    <button class="chip" aria-pressed="true" data-ucat="all">Все</button>
+    <button class="chip" aria-pressed="false" data-ucat="tips">Лайфхаки дизайнеров</button>
+    <button class="chip" aria-pressed="false" data-ucat="masters">Проверенные мастера</button>
+    <button class="chip" aria-pressed="false" data-ucat="materials">Материалы</button>
+    <button class="chip" aria-pressed="false" data-ucat="trends">Тренды</button>
+  </div>
+  <div class="hs rise" id="usefulList"></div>
+  <div class="acts rise"><button class="b b-line" data-open="lead" data-topic="Консультация по плану ремонта и замерам">Подскажем по плану ремонта и замерам</button></div>
+</section>
+
+<!-- 10. ШКАФЫ -->
+<section class="sec dark" id="cabinets" aria-label="Шкафы" style="padding-top:90px;padding-bottom:90px">
+  <div class="strip rise">
+    <p>Если дома нужен ещё и шкаф, сделаем его под размеры вашей комнаты.</p>
+    <a class="b b-line" href="#" onclick="return false">Посмотреть шкафы</a>
+  </div>
+</section>
+
+<!-- 11. КОНТАКТЫ -->
+<section class="sec dark ruled" id="contacts" aria-labelledby="contacts-h">
+  <div class="shead rise">
+    <div><div class="eb">10 / Контакты</div><h2 id="contacts-h">Приезжайте в салон: сделаем бесплатный 3D-проект</h2></div>
+  </div>
+  <div class="cgrid">
+    <div class="info rise">
+      <dl>
+        <div><dt>Салон</dt><dd>Петропавловск-Камчатский, ул.&nbsp;Войцешека,&nbsp;7а</dd></div>
+        <div><dt>Часы работы</dt><dd>Пн–Сб, 11:00–19:00</dd></div>
+        <div><dt>Телефон</dt><dd><a href="tel:+79245858263">+7 (924) 585-82-63</a></dd></div>
+        <div><dt>Мессенджеры</dt><dd class="opts">
+          <a class="b b-line b-sm" href="https://wa.me/79245873702" target="_blank" rel="noopener">WhatsApp</a>
+          <a class="b b-line b-sm" href="https://t.me/dommebeli41" target="_blank" rel="noopener">Telegram</a>
+          <a class="b b-line b-sm" href="#" onclick="return false">MAX</a>
+          <a class="b b-line b-sm" href="https://vk.com/dommebeli41" target="_blank" rel="noopener">ВКонтакте</a>
+        </dd></div>
+      </dl>
+      <div class="phx map cut"><span>КАРТА · Яндекс Карты · грузится по клику</span></div>
+    </div>
+    <div class="formcard rise">
+      <form class="form lead-form" novalidate data-topic="Запись на 3D-проект в салоне (форма в контактах)">
+        <div><h3>Запишитесь на бесплатный 3D-проект</h3><p class="sub">Оставьте имя и телефон, а мы свяжемся и подберём удобное время визита.</p></div>
+        <div class="field"><label class="label" for="cName">Имя</label><input class="input" id="cName" name="name" autocomplete="given-name"></div>
+        <div class="field"><label class="label" for="cPhone">Телефон</label><input class="input" id="cPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__"><p class="error">Проверьте номер: после +7 нужно 10 цифр</p></div>
+        <div class="field"><span class="label">Как с вами связаться</span>
+          <div class="opts" data-method role="group" aria-label="Способ связи">
+            <button type="button" class="chip" aria-pressed="false" data-v="Позвонить">Позвонить</button>
+            <button type="button" class="chip" aria-pressed="true" data-v="WhatsApp">WhatsApp</button>
+            <button type="button" class="chip" aria-pressed="false" data-v="Telegram">Telegram</button>
+            <button type="button" class="chip" aria-pressed="false" data-v="MAX">MAX</button>
+            <button type="button" class="chip" aria-pressed="false" data-v="ВКонтакте">ВКонтакте</button>
+          </div>
+          <p class="hint" style="margin:0">Если не любите звонки, выберите мессенджер, и мы напишем туда.</p>
+        </div>
+        <input tabindex="-1" autocomplete="off" name="company" aria-hidden="true" style="position:absolute;width:1px;height:1px;opacity:0">
+        <label class="check"><input type="checkbox" name="consent" aria-label="Согласие на обработку персональных данных"> <span>Соглашаюсь на обработку персональных данных по <a href="privacy.html">политике</a> и <a href="privacy.html#consent">тексту согласия</a></span></label>
+        <button class="b b-coral go b-block" type="submit" disabled>Записаться в салон</button>
+        <p class="hint" style="margin:0">Свяжемся только по этой заявке.</p>
+      </form>
+      <div class="success" aria-live="polite">
+        <span class="ok"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg></span>
+        <h3>Заявка у нас</h3>
+        <p class="mut" data-success-text></p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- 12. ПОДВАЛ -->
+<footer class="footer">
+  <div class="fgrid">
+    <div><img src="img/logo.svg" alt="Камчатский дом мебели"><p class="legal">ООО «Камчатский дом мебели»<br>ИНН 4101192200, ОГРН 1204100001654</p></div>
+    <div><span class="k">Документы</span><a href="privacy.html">Политика обработки персональных данных</a><a href="privacy.html#consent">Согласие на обработку персональных данных</a></div>
+    <div><span class="k">Соцсети</span><a href="https://vk.com/dommebeli41" target="_blank" rel="noopener">ВКонтакте</a><a href="https://t.me/dommebeli41" target="_blank" rel="noopener">Telegram</a></div>
+    <div><span class="k">Связаться</span><a href="tel:+79245858263">+7 (924) 585-82-63</a><a href="#" data-open="messengers">Написать в мессенджер</a></div>
+  </div>
+  <div class="fbottom"><span>© 2026 Камчатский дом мебели</span><a href="#top">Наверх ↑</a></div>
+</footer>
+
+<!-- Cookie -->
+<div class="cookie" id="cookie" role="region" aria-label="Cookie">
+  <p><a href="privacy.html#cookie">Cookie</a> нужны нам для аналитики, и мы включим их, только если вы согласны</p>
+  <div class="row">
+    <button class="b b-line b-sm" data-cookie="decline">Отклонить</button>
+    <button class="b b-line b-sm" data-cookie="accept">Принять</button>
+  </div>
+</div>
+
+<!-- ОКНО: мессенджеры -->
+<dialog id="messengers" class="narrow" aria-labelledby="msg-h">
+  <div class="dlg-head"><b id="msg-h">Где вам удобнее написать?</b><button class="x" data-close aria-label="Закрыть"></button></div>
+  <div class="dlg-body dstack msgs">
+    <a class="b b-line b-block" href="https://wa.me/79245873702" target="_blank" rel="noopener">WhatsApp</a>
+    <a class="b b-line b-block" href="https://t.me/dommebeli41" target="_blank" rel="noopener">Telegram</a>
+    <a class="b b-line b-block" href="#" onclick="return false">MAX</a>
+    <a class="b b-line b-block" href="https://vk.com/dommebeli41" target="_blank" rel="noopener">ВКонтакте</a>
+    <p class="hint" style="text-align:center">Отвечаем в рабочее время в течение 10 минут</p>
+  </div>
+</dialog>
+
+<!-- ОКНО: проект -->
+<dialog id="project" aria-labelledby="pTitle">
+  <div class="dlg-head"><span class="tg" id="pType"></span><button class="x" data-close aria-label="Закрыть"></button></div>
+  <div class="dlg-body story">
+    <div>
+      <h3 id="pTitle"></h3>
+      <p class="prm"><span id="pArea"></span><i></i><span id="pDays"></span><i></i><span id="pPrice"></span></p>
+      <p class="hint">Дизайнер: <span id="pDesigner"></span></p>
+    </div>
+    <div>
+      <p class="label" style="margin-bottom:12px">3D-проект → готовая кухня</p>
+      <div class="ba" id="ba">
+        <img src="img/v2-render.jpg" alt="3D-проект" loading="lazy">
+        <img class="after" src="img/v2-photo.jpg" alt="Готовая кухня" loading="lazy">
+        <span class="lbl" style="left:20px">3D-проект</span><span class="lbl" style="right:20px">Готовая кухня</span>
+        <span class="ln2"></span><span class="hd"><img src="img/handle-arrows-dark.svg" alt=""></span>
+        <input type="range" min="0" max="100" value="50" aria-label="Сравнить 3D-проект и готовую кухню">
+      </div>
+    </div>
+    <div class="two">
+      <div><h4>Кто пришёл</h4><p class="tx">[1–2 предложения: кто клиент, какая квартира, с чем пришёл]</p></div>
+      <div><h4>Что хотели</h4><p class="tx">[1–2 предложения: задача и пожелания]</p></div>
+      <div><h4>Какие были сложности</h4><p class="tx">[1–2 предложения: трубы, ниша, сроки, бюджет — и как решили]</p></div>
+      <div><h4>Что получилось</h4><p class="tx">[1–2 предложения: итог, срок, что понравилось клиенту]</p></div>
+    </div>
+    <div class="carousel" id="pCarousel" data-i="1">
+      <div class="view" data-car-view></div><span class="cnt" data-car-cnt></span>
+      <button class="car-btn car-prev" type="button" data-car="-1" aria-label="Предыдущее фото"><i></i></button>
+      <button class="car-btn car-next" type="button" data-car="1" aria-label="Следующее фото"><i></i></button>
+    </div>
+  </div>
+  <div class="dlg-foot">
+    <button class="b b-line" data-open="lead" id="pDesignerBtn" data-topic="">Записаться к дизайнеру</button>
+    <button class="b b-coral go" id="pWant">Хочу такую же</button>
+  </div>
+</dialog>
+
+<!-- ОКНО: фото проекта дизайнера -->
+<dialog id="photoDlg" aria-labelledby="phTitle">
+  <div class="dlg-head"><b id="phTitle">Фото проекта</b><button class="x" data-close aria-label="Закрыть"></button></div>
+  <div class="dlg-body">
+    <div class="carousel" id="phCarousel" data-i="1">
+      <div class="view" data-car-view></div><span class="cnt" data-car-cnt></span>
+      <button class="car-btn car-prev" type="button" data-car="-1" aria-label="Предыдущее фото"><i></i></button>
+      <button class="car-btn car-next" type="button" data-car="1" aria-label="Следующее фото"><i></i></button>
+    </div>
+  </div>
+</dialog>
+
+<!-- ОКНО: карточка «Полезного» -->
+<dialog id="usefulDlg" aria-labelledby="uTitle">
+  <div class="dlg-head"><span class="tg" id="uCat"></span><button class="x" data-close aria-label="Закрыть"></button></div>
+  <div class="dlg-body dstack" style="gap:24px">
+    <h3 id="uTitle" style="font:500 32px/38px var(--sans);letter-spacing:-1.2px">[Заголовок карточки]</h3>
+    <div class="pic cut" style="height:400px"><img id="uImg" src="img/hero-2.jpg" alt="" loading="lazy"></div>
+    <p class="tx">[Текст от КДМ · 3–5 предложений, до 600 знаков: конкретный совет или контакт мастера]</p>
+  </div>
+  <div class="dlg-foot"><span class="hint" style="margin:0;align-self:center">Нужен совет по вашему ремонту?</span><button class="b b-line" data-open="lead" data-topic="Консультация по плану ремонта и замерам">Подскажем по плану ремонта</button></div>
+</dialog>
+
+<!-- ОКНО: заявка -->
+<dialog id="lead" class="narrow" aria-labelledby="leadTitle">
+  <div class="dlg-head"><b id="leadTitle">Запись на бесплатный 3D-проект</b><button class="x" data-close aria-label="Закрыть"></button></div>
+  <div class="dlg-body">
+    <form class="form lead-form" novalidate>
+      <div class="field"><label class="label" for="lName">Имя</label><input class="input" id="lName" name="name" autocomplete="given-name"></div>
+      <div class="field"><label class="label" for="lPhone">Телефон</label><input class="input" id="lPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__"><p class="error">Проверьте номер: после +7 нужно 10 цифр</p></div>
+      <div class="field"><span class="label">Как с вами связаться</span>
+        <div class="opts" data-method role="group" aria-label="Способ связи">
+          <button type="button" class="chip" aria-pressed="false" data-v="Позвонить">Позвонить</button>
+          <button type="button" class="chip" aria-pressed="true" data-v="WhatsApp">WhatsApp</button>
+          <button type="button" class="chip" aria-pressed="false" data-v="Telegram">Telegram</button>
+          <button type="button" class="chip" aria-pressed="false" data-v="MAX">MAX</button>
+          <button type="button" class="chip" aria-pressed="false" data-v="ВКонтакте">ВКонтакте</button>
+        </div>
+      </div>
+      <input tabindex="-1" autocomplete="off" name="company" aria-hidden="true" style="position:absolute;width:1px;height:1px;opacity:0">
+      <label class="check"><input type="checkbox" name="consent" aria-label="Согласие на обработку персональных данных"> <span>Соглашаюсь на обработку персональных данных по <a href="privacy.html">политике</a> и <a href="privacy.html#consent">тексту согласия</a></span></label>
+      <button class="b b-coral go b-block" type="submit" disabled>Записаться в салон</button>
+    </form>
+    <div class="success" aria-live="polite">
+      <span class="ok"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg></span>
+      <h3>Заявка у нас</h3>
+      <p class="mut" data-success-text></p>
+      <button class="b b-line" data-close>Вернуться на сайт</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+/* Данные проектов — заглушки до реальных данных от КДМ */
+const PROJECTS=[
+  {img:'img/project-1.jpg',tag:'Угловая',title:'Светлая кухня<br>на Северо-Востоке',short:'Светлая кухня<br>на Северо-Востоке',area:'9,4',days:'38 дней',price:'420 000 р'},
+  {img:'img/project-2.jpg',tag:'С островом',title:'Тёмная кухня<br>на Ленина',short:'Тёмная кухня<br>на Ленина',area:'14,2',days:'45 дней',price:'690 000 р'},
+  {img:'img/project-3.jpg',tag:'Прямая',title:'Кухня из дуба<br>на Океанской',short:'Кухня из дуба<br>на Океанской',area:'6,8',days:'32 дня',price:'310 000 р'},
+  {img:'img/project-4.jpg',tag:'Угловая',title:'Белая кухня<br>на Мишенной',short:'Белая кухня<br>на Мишенной',area:'8,1',days:'35 дней',price:'385 000 р'},
+  {img:'img/project-5.jpg',tag:'Угловая',title:'Зелёная кухня<br>на Кутузова',short:'Зелёная кухня<br>на Кутузова',area:'7,6',days:'40 дней',price:'450 000 р'},
+];
+
+/* ---------- Разбивка заголовков на слова для анимации ---------- */
+/* слова становятся inline-block, а с ними обрезка text-box по-разному работает в браузерах
+   (в Safari первая строка отъезжала). Поэтому один раз меряем, сколько обрезка снимала сверху,
+   выключаем её и сдвигаем заголовок на эту величину — верх заглавных остаётся там же, где в Figma.
+   Скрытые заголовки (мобильные на десктопе и наоборот) меряем, когда они появятся — в fit(). */
+function capfix(el){
+  {
+    const fs=parseFloat(getComputedStyle(el).fontSize);
+    let off=fs*.2146; // запас для браузеров без text-box: (53 − 65,5)/2 + 1,065·48 − 0,72·48 ≈ 10,3 px
+    if(CSS.supports('text-box','trim-both cap alphabetic')){
+      const Ht=el.offsetHeight;
+      el.style.textBox='none';
+      const m=document.createElement('span');m.style.cssText='display:inline-block;width:0;height:0';
+      el.append(m);
+      const er=el.getBoundingClientRect(),k=er.height/el.offsetHeight||1;
+      off=(m.getBoundingClientRect().top-er.top)/k-Ht;
+      m.remove();
+    }
+    el.style.textBox='none';el.style.marginTop=-off+'px';el.dataset.capfix=off.toFixed(2);
+  }
+}
+function split(el){
+  if(!el.dataset.capfix&&el.offsetHeight)capfix(el);
+  let i=0;
+  el.innerHTML=el.innerHTML.split(/(<br>)/).map(part=>part==='<br>'?part:
+    part.split(/(\s+)/).map(w=>/^\s*$/.test(w)?w:`<span class="w" style="--i:${i++}">${w}</span>`).join('')).join('');
+}
+document.querySelectorAll('.split').forEach(split);
+/* первый экран стартует после прелоудера, блок проектов — при прокрутке */
+new MutationObserver(()=>{if(document.documentElement.classList.contains('ready'))document.querySelectorAll('.hero,.mhero').forEach(h=>h.classList.add('on-ready'))})
+  .observe(document.documentElement,{attributes:true,attributeFilter:['class']});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('inview');io.unobserve(e.target)}}),{threshold:.25});
+const views=[...document.querySelectorAll('.projects,.mprojects')];
+views.forEach(el=>io.observe(el));
+/* запасной вариант на случай, если наблюдатель не сработал (фоновые вкладки, старые браузеры) */
+function checkView(){
+  const z=parseFloat(document.documentElement.style.zoom)||1;
+  views.forEach(el=>{if(el.offsetHeight&&!el.classList.contains('inview')&&el.getBoundingClientRect().top*z<innerHeight*.75)el.classList.add('inview')});
+  if(views.every(el=>el.classList.contains('inview')))removeEventListener('scroll',checkView);
+}
+addEventListener('scroll',checkView,{passive:true});
+
+/* ---------- Карусель первого экрана ---------- */
+function carousel(media,prevB,nextB){
+  const slides=[...media.querySelectorAll('.slide')];
+  let cur=0,timer;
+  function show(i){slides[cur].classList.remove('on');cur=(i+slides.length)%slides.length;slides[cur].classList.add('on');restart()}
+  function restart(){clearInterval(timer);timer=setInterval(()=>show(cur+1),6000)}
+  prevB.onclick=()=>show(cur-1);
+  nextB.onclick=()=>show(cur+1);
+  /* на телефоне фото можно листать и пальцем */
+  let sx=null;
+  media.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});
+  media.addEventListener('touchend',e=>{if(sx===null)return;const dx=e.changedTouches[0].clientX-sx;sx=null;if(Math.abs(dx)>40)show(cur+(dx<0?1:-1))});
+  return restart;
+}
+const carousels=[carousel(heroMedia,prev,next),carousel(mHeroMedia,mPrev,mNext)];
+function restart(){carousels.forEach(r=>r())}
+
+/* ---------- Карточка проекта + миниатюры ---------- */
+const thumbs=document.getElementById('thumbs');
+thumbs.innerHTML=PROJECTS.map((p,i)=>`<button class="thumb${i?'':' on'}" data-i="${i}"><span class="ph" style="display:block"><img src="${p.img}" alt="" loading="lazy"></span><span class="nm trim">${p.short}</span></button>`).join('');
+let active=0;
+thumbs.addEventListener('click',e=>{
+  const t=e.target.closest('.thumb');if(!t)return;
+  const i=+t.dataset.i;if(i===active)return;
+  active=i;
+  thumbs.querySelectorAll('.thumb').forEach(b=>b.classList.toggle('on',b===t));
+  const p=PROJECTS[i];
+  const text=[cText,cTag];
+  text.forEach(el=>el.classList.add('out'));
+  cPhoto.style.opacity=0;
+  setTimeout(()=>{
+    cTitle.innerHTML=p.title;split(cTitle);cTitle.classList.add('replay');void cTitle.offsetWidth;cTitle.classList.remove('replay');cTag.textContent=p.tag;
+    cArea.textContent=`S = ${p.area} м²`;cDays.textContent=p.days;cPrice.textContent=p.price;
+    cPhoto.onload=()=>cPhoto.style.opacity=1;cPhoto.src=p.img;
+    if(cPhoto.complete)cPhoto.style.opacity=1;
+    text.forEach(el=>el.classList.remove('out'));
+  },300);
+});
+/* ---------- Мобильный слайдер проектов ---------- */
+mTrack.innerHTML=PROJECTS.map((p,i)=>`<article class="mcard">
+  <div class="ph"><img src="${p.img}" alt=""${i?' loading="lazy"':''}></div>
+  <div class="panel">
+    <svg viewBox="0 0 380 346" aria-hidden="true"><g fill="#CFCFCF">
+      <rect class="ln h" style="--d:.2s" x="30" y="173" width="320" height="1" shape-rendering="crispEdges"/>
+      <rect class="ln v" style="--d:.1s" x="349" y="40" width="1" height="276" shape-rendering="crispEdges"/>
+      <path class="ln bl" style="--d:.5s" d="M249.29 273.29 L250 274 L350 174 L349.29 173.29 Z"/>
+    </g></svg>
+    <h3 class="abs title h28 trim split" style="--d:.1s">${p.title}</h3>
+    <div class="params m14 rise" style="--d:.35s"><span class="trim">S = ${p.area} м²</span><i></i><span class="trim">${p.days}</span></div>
+    <div class="abs price trim rise" style="--d:.45s"><small>от </small>${p.price.trim().replace(/ /g,'<i class="sp"></i>')}</div>
+    <a class="btn rise" style="--d:.55s" href="#" onclick="openProject(${i});return false"><span class="trim t14">Подробнее</span><img src="img/arrow-ne.svg" alt=""></a>
+  </div>
+</article>`).join('');
+mTrack.querySelectorAll('.split').forEach(split);
+mDots.innerHTML=PROJECTS.map((p,i)=>`<button${i?'':' class="on"'} aria-label="Проект ${i+1}"></button>`).join('');
+const mCards=[...mTrack.children],dots=[...mDots.children];
+let mCur=0;
+/* какая карточка сейчас у левого края: доля прокрутки × (n − 1), не зависит от масштаба страницы */
+function mIndex(){const max=mTrack.scrollWidth-mTrack.clientWidth;return max>0?Math.round(mTrack.scrollLeft/max*(mCards.length-1)):0}
+function mSet(i){mCur=i;dots.forEach((d,k)=>d.classList.toggle('on',k===i))}
+let mTarget=null,mIdle;
+function mSync(){
+  /* пока едем к карточке по стрелке или точке, промежуточные позиции не трогают индекс */
+  clearTimeout(mIdle);mIdle=setTimeout(()=>{mTarget=null;mSet(mIndex())},150);
+  if(mTarget===null&&mIndex()!==mCur)mSet(mIndex());
+}
+function mGo(i){
+  i=Math.max(0,Math.min(mCards.length-1,i));
+  const max=mTrack.scrollWidth-mTrack.clientWidth;
+  mTarget=i;mSet(i);
+  mTrack.scrollTo({left:max*i/(mCards.length-1),behavior:'smooth'});
+}
+mTrack.addEventListener('scroll',mSync,{passive:true});
+/* стрелки листают по кругу */
+mcPrev.onclick=()=>mGo(mCur?mCur-1:mCards.length-1);
+mcNext.onclick=()=>mGo(mCur<mCards.length-1?mCur+1:0);
+mDots.onclick=e=>{const k=dots.indexOf(e.target);if(k>=0)mGo(k)};
+
+/* ---------- Мобильное меню ---------- */
+function menu(open){
+  document.documentElement.classList.toggle('menu-open',open);
+  mmenu.setAttribute('aria-hidden',!open);burger.setAttribute('aria-expanded',open);
+  if(!open)mnav.querySelectorAll('a.on').forEach(a=>a.classList.remove('on'));
+}
+burger.onclick=()=>menu(true);
+mclose.onclick=()=>menu(false);
+addEventListener('keydown',e=>{if(e.key==='Escape')menu(false)});
+/* на телефоне ховера нет: при касании пункт подсвечивается (полосы + домик), затем меню закрывается */
+mnav.addEventListener('touchstart',e=>{const a=e.target.closest('a');if(!a)return;
+  mnav.querySelectorAll('a.on').forEach(x=>x!==a&&x.classList.remove('on'));a.classList.add('on')},{passive:true});
+mnav.addEventListener('click',e=>{const a=e.target.closest('a');if(!a)return;e.preventDefault();a.classList.add('on');
+  const href=a.getAttribute('href');
+  setTimeout(()=>{menu(false);if(href.length>1)document.querySelector(href).scrollIntoView({behavior:'smooth'})},450)});
+mmenu.querySelectorAll('.mbig,.soc').forEach(a=>a.addEventListener('click',()=>menu(false)));
+
+/* колесо над миниатюрами прокручивает только их */
+thumbs.addEventListener('wheel',e=>{
+  const max=thumbs.scrollHeight-thumbs.clientHeight;
+  if(max<=0)return;
+  e.preventDefault();thumbs.scrollTop+=e.deltaY;
+},{passive:false});
+
+/* ---------- Прелоудер ---------- */
+(function(){
+  const pre=document.getElementById('pre');
+  const imgs=[...document.images].filter(i=>!i.loading||i.loading!=='lazy');
+  let real=0,shown=0;const t0=performance.now(),MIN=1400;
+  const tasks=imgs.map(i=>i.complete?Promise.resolve():new Promise(r=>{i.onload=i.onerror=r}));
+  tasks.push(document.fonts.ready);
+  tasks.forEach(p=>p.then(()=>{real++}));
+  let last=t0;
+  function tick(now){
+    if(window.PRE_FREEZE){preBar.style.setProperty('--p',window.PRE_BAR??PRE_FREEZE);prePct.textContent=PRE_FREEZE;return}
+    const target=Math.min(real/tasks.length,(now-t0)/MIN)*100;
+    // догоняем цель по реальному времени, а не по кадрам
+    shown+=(target-shown)*(1-Math.exp(-(now-last)/90));last=now;
+    if(now-t0>6000)shown=100;
+    if(target>=100&&shown>99.5)shown=100;
+    preBar.style.setProperty('--p',shown);
+    prePct.textContent=Math.floor(shown);
+    if(shown<100)return requestAnimationFrame(tick);
+    setTimeout(()=>{
+      pre.classList.add('done');
+      document.documentElement.classList.remove('loading');
+      document.documentElement.classList.add('ready');
+      restart();
+      setTimeout(()=>pre.classList.add('gone'),800);
+    },200);
+  }
+  requestAnimationFrame(tick);
+})();
+</script>
+
+<script>
+/* =================== Логика прототипа (квиз, формы, окна) — перенесена из kdm-prototype =================== */
+(function(){
+  const $ = (s, el = document) => el.querySelector(s);
+  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+  const store = {
+    get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } },
+    set(k, v){ try { localStorage.setItem(k, v); } catch(e){} }
+  };
+
+  /* Появление блоков при прокрутке */
+  const secs = $$('.sec,.footer');
+  const sio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('inview'); sio.unobserve(e.target); } }), { threshold: .12 });
+  secs.forEach(s => sio.observe(s));
+  function secCheck(){ const z = parseFloat(document.documentElement.style.zoom) || 1; secs.forEach(s => { if (!s.classList.contains('inview') && s.getBoundingClientRect().top * z < innerHeight * .9) s.classList.add('inview'); }); }
+  addEventListener('scroll', secCheck, { passive: true });
+
+  /* Cookie */
+  const cookie = $('#cookie');
+  if (store.get('kdm-cookie')) cookie.classList.add('hide');
+  $$('[data-cookie]').forEach(b => b.addEventListener('click', () => { store.set('kdm-cookie', b.dataset.cookie); cookie.classList.add('hide'); }));
+
+  /* Фото-заглушки: пока снимков КДМ нет, берём кадры концепта */
+  const PICS = ['img/project-1.jpg', 'img/project-2.jpg', 'img/project-3.jpg', 'img/project-4.jpg', 'img/project-5.jpg', 'img/hero-2.jpg'];
+  const pic = i => PICS[i % PICS.length];
+
+  const designers = ['Дизайнер 1', 'Дизайнер 2', 'Дизайнер 3'];
+  $('#designersGrid').innerHTML = designers.map((d, i) => `
+    <div class="ds rise" style="--d:${i * .1}s">
+      <div class="phx cut"><span>ПОРТРЕТ · по пояс, общий фон</span></div>
+      <h3>[Имя Фамилия]</h3>
+      <p class="tx">[О дизайнере — 1–2 фразы, до 120 знаков]</p>
+      <span class="label">Проекты дизайнера</span>
+      <div class="dthumbs">${[1, 2, 3].map(k => `<button type="button" class="dthumb cut-s" data-d="${i}" data-k="${k}" aria-label="Фото проекта ${k}"><img src="${pic(i * 2 + k)}" alt="" loading="lazy"></button>`).join('')}</div>
+      <button class="b b-line b-block" data-open="lead" data-topic="Запись к дизайнеру: ${d}">Записаться в салон к этому дизайнеру</button>
+    </div>`).join('');
+
+  const reviews = [
+    { kind: 'video', ph: 'ВИДЕООТЗЫВ · 30–60 сек' }, { kind: 'video', ph: 'ВИДЕООТЗЫВ · 30–60 сек' }, { kind: 'video', ph: 'ВИДЕООТЗЫВ · 30–60 сек' },
+    { kind: 'photo', ph: 'ФОТО · клиент в своей кухне' }, { kind: 'photo', ph: 'ФОТО · кухня через год' }, { kind: 'photo', ph: 'ФОТО · клиент в своей кухне' }
+  ];
+  $('#reviewsGrid').innerHTML = reviews.map((r, i) => `
+    <div class="rv" data-kind="${r.kind}"${r.kind === 'video' ? '' : ' hidden'}>
+      <div class="pic"><img src="${pic(i + 1)}" alt="" loading="lazy">${r.kind === 'video' ? '<i class="play" aria-hidden="true"></i>' : ''}<span class="tg" style="position:absolute;left:20px;top:20px;background:rgba(31,27,32,.7);color:#fff;border:0">${r.ph}</span></div>
+      <div class="body">
+        <div class="top"><span>[Имя клиента]</span><span class="stars">★★★★★</span></div>
+        <p class="tx">${r.kind === 'video' ? '[Подпись к видео — 1 фраза, о чём отзыв]' : '[Текст отзыва как есть, до 300 знаков]'}</p>
+        <div class="meta"><span>[дата]</span><span>·</span><a href="#" onclick="return false">Источник: 2ГИС</a></div>
+      </div>
+    </div>`).join('');
+
+  const ucats = { tips: 'Лайфхаки дизайнеров', masters: 'Проверенные мастера', materials: 'Материалы', trends: 'Тренды' };
+  const useful = ['tips', 'masters', 'materials', 'trends', 'tips', 'masters'];
+  $('#usefulList').innerHTML = useful.map((c, i) => `
+    <button class="uc" data-ucat="${c}" data-img="${pic(i + 2)}">
+      <div class="pic cut"><img src="${pic(i + 2)}" alt="" loading="lazy"></div>
+      <span class="tg">${ucats[c]}</span><b>[Заголовок карточки ${i + 1} · до 50 знаков]</b>
+    </button>`).join('');
+
+  /* Отзывы: вкладки */
+  $$('[data-rtab]').forEach(t => t.addEventListener('click', () => {
+    $$('[data-rtab]').forEach(x => x.setAttribute('aria-selected', String(x === t)));
+    $$('#reviewsGrid .rv').forEach(c => c.hidden = c.dataset.kind !== t.dataset.rtab);
+  }));
+
+  /* Полезное: фильтр и окно */
+  $$('[data-ucat].chip').forEach(b => b.addEventListener('click', () => {
+    $$('[data-ucat].chip').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    $$('#usefulList .uc').forEach(c => c.hidden = !(b.dataset.ucat === 'all' || c.dataset.ucat === b.dataset.ucat));
+  }));
+  $('#usefulList').addEventListener('click', e => {
+    const c = e.target.closest('.uc'); if (!c) return;
+    $('#uCat').textContent = ucats[c.dataset.ucat];
+    $('#uImg').src = c.dataset.img;
+    openDlg('usefulDlg');
+  });
+
+  /* Карусели фото */
+  function setCar(c, i){
+    const imgs = (c.dataset.imgs || PICS.join(',')).split(','), total = imgs.length;
+    i = ((i - 1 + total) % total) + 1; c.dataset.i = i;
+    $('[data-car-view]', c).style.backgroundImage = `url(${imgs[i - 1]})`;
+    $('[data-car-cnt]', c).textContent = `${String(i).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
+  }
+  document.addEventListener('click', e => { const b = e.target.closest('[data-car]'); if (!b) return; const c = b.closest('.carousel'); setCar(c, (+c.dataset.i || 1) + +b.dataset.car); });
+  $('#designersGrid').addEventListener('click', e => {
+    const t = e.target.closest('.dthumb'); if (!t) return;
+    $('#phTitle').textContent = `[${designers[+t.dataset.d]}] · проект ${t.dataset.k}`;
+    const c = $('#phCarousel'), s = +t.dataset.d * 2 + +t.dataset.k;
+    c.dataset.imgs = [0, 1, 2, 3].map(k => pic(s + k)).join(','); setCar(c, 1);
+    openDlg('photoDlg');
+  });
+
+  /* Окна */
+  function openDlg(id){ const d = document.getElementById(id); if (!d) return; $$('dialog[open]').forEach(o => { if (o !== d) o.close(); }); if (!d.open) d.showModal(); }
+  $$('dialog').forEach(d => { d.addEventListener('click', e => { if (e.target === d) d.close(); }); });
+  document.addEventListener('click', e => {
+    const closeBtn = e.target.closest('[data-close]');
+    if (closeBtn) { const d = closeBtn.closest('dialog'); if (d) d.close(); }
+    const op = e.target.closest('[data-open]');
+    if (!op) return;
+    e.preventDefault();
+    const id = op.dataset.open;
+    if (window.menu && document.documentElement.classList.contains('menu-open')) window.menu(false);
+    if (id === 'lead') prepareLead(op.dataset.topic || 'Запись на бесплатный 3D-проект', op.dataset.title);
+    if (id === 'quiz') { $$('dialog[open]').forEach(o => o.close()); startQuiz(op.dataset.kitchen || null); goQuiz(); return; }
+    openDlg(id);
+  });
+
+  /* Проект: открывается кнопкой «Подробнее» в карточке концепта */
+  let currentProject = null;
+  window.openProject = function(i){
+    const p = PROJECTS[i]; currentProject = p.tag;
+    $('#pType').textContent = p.tag;
+    $('#pTitle').innerHTML = p.title;
+    $('#pArea').textContent = `S = ${p.area} м²`; $('#pDays').textContent = p.days; $('#pPrice').textContent = `от ${p.price}`;
+    const d = designers[i % 3];
+    $('#pDesigner').textContent = `[${d}]`;
+    $('#pDesignerBtn').dataset.topic = `Запись к дизайнеру: ${d}`;
+    const c = $('#pCarousel'); c.dataset.imgs = [p.img, ...PICS.filter(x => x !== p.img).slice(0, 4)].join(','); setCar(c, 1);
+    baRange.value = 50; baRange.dispatchEvent(new Event('input'));
+    openDlg('project');
+  };
+  $('#pWant').addEventListener('click', () => { $('#project').close(); startQuiz(currentProject); goQuiz(); });
+  const ba = $('#ba'), baRange = $('#ba input');
+  baRange.addEventListener('input', () => ba.style.setProperty('--v', baRange.value + '%'));
+
+  /* Телефон и формы */
+  function digits(v){ return (v || '').replace(/\D/g, ''); }
+  function formatPhone(v){
+    let d = digits(v); if (d.startsWith('8')) d = '7' + d.slice(1); if (!d.startsWith('7')) d = '7' + d; d = d.slice(0, 11);
+    const p = d.slice(1); let out = '+7';
+    if (p.length) out += ' (' + p.slice(0, 3); if (p.length >= 3) out += ')';
+    if (p.length > 3) out += ' ' + p.slice(3, 6); if (p.length > 6) out += '-' + p.slice(6, 8); if (p.length > 8) out += '-' + p.slice(8, 10);
+    return out;
+  }
+  function phoneOk(v){ return digits(v).length === 11; }
+  $$('.proto input[type="tel"], dialog input[type="tel"]').forEach(i => i.addEventListener('input', () => { i.value = formatPhone(i.value); i.classList.remove('invalid'); const er = i.parentElement.querySelector('.error'); if (er) er.classList.remove('show'); }));
+  $$('[data-method]').forEach(g => g.addEventListener('click', e => { const b = e.target.closest('.chip'); if (!b) return; $$('.chip', g).forEach(x => x.setAttribute('aria-pressed', String(x === b))); }));
+  function methodOf(scope){ const b = $('[data-method] .chip[aria-pressed="true"]', scope); return b ? b.dataset.v : 'WhatsApp'; }
+
+  function kamchatkaNow(){
+    try {
+      const f = new Intl.DateTimeFormat('ru-RU', { timeZone: 'Asia/Kamchatka', hour: '2-digit', minute: '2-digit', hour12: false });
+      const t = f.format(new Date()); const h = parseInt(t.slice(0, 2), 10);
+      const sunday = new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Kamchatka', weekday: 'short' }).format(new Date()) === 'Sun';
+      return { t, open: !sunday && h >= 11 && h < 19 };
+    } catch(e){ return { t: '', open: true }; }
+  }
+  function successText(method){
+    const k = kamchatkaNow();
+    const how = method === 'Позвонить' ? 'Мы позвоним вам' : `Мы напишем вам в ${method}`;
+    return k.open ? `${how} в течение 10 минут.` : `${how} в рабочее время: сейчас на Камчатке ${k.t}, а мы работаем пн–сб с 11:00 до 19:00.`;
+  }
+  function prepareLead(topic, title){
+    const dlg = $('#lead');
+    $('#leadTitle').textContent = title || topic;
+    const form = $('form', dlg); form.dataset.topic = topic; form.hidden = false; form.reset();
+    $('.success', dlg).classList.remove('show');
+    $('button[type="submit"]', form).disabled = true;
+  }
+  $$('.lead-form').forEach(form => {
+    const consent = $('input[name="consent"]', form), submit = $('button[type="submit"]', form);
+    consent.addEventListener('change', () => { submit.disabled = !consent.checked; });
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const phone = $('input[name="phone"]', form);
+      if (!phoneOk(phone.value)) { phone.classList.add('invalid'); phone.parentElement.querySelector('.error').classList.add('show'); phone.focus(); return; }
+      const box = form.parentElement.querySelector('.success');
+      $('[data-success-text]', box).textContent = successText(methodOf(form));
+      form.hidden = true; box.classList.add('show');
+    });
+  });
+
+  /* Квиз: 2 вопроса → контакт (заявка уходит в Битрикс24) → 3 необязательных уточнения → «Заявка у нас» */
+  const q = { step: 1, answers: {}, important: [] };
+  const qNext = $('#qNext'), qBack = $('#qBack'), qSkip = $('#qSkip');
+  const CONTACT = 3, PHOTO = 6, LAST = 7;
+  const leadLines = {
+    'Делаем ремонт и нужна новая кухня': 'Подберём кухню под ваш ремонт и сроки.',
+    'Меняем старую кухню в квартире, где живём': 'Поможем заменить старую кухню без долгого простоя.',
+    'Кухня маленькая или с нестандартной планировкой, готовые не подходят': 'Сделаем кухню под вашу планировку, даже если готовые не подходят.',
+    'Переезд или форс-мажор, кухня нужна к конкретной дате': 'Успеем к нужной дате: срок пропишем в договоре.',
+    'Квартира под сдачу, нужно просто и недорого': 'Подберём простое решение без лишних трат.'
+  };
+  function renderQuiz(){
+    $$('#quiz .q-step').forEach(s => s.classList.toggle('active', +s.dataset.step === q.step));
+    const shown = Math.min(q.step, PHOTO);
+    $('#qNum').textContent = shown;
+    $('#qHead').style.visibility = q.step === LAST ? 'hidden' : 'visible';
+    $('#qBar').style.width = (q.step === LAST ? 100 : shown / PHOTO * 100) + '%';
+    qBack.style.visibility = (q.step === 1 || q.step === CONTACT + 1 || q.step === LAST) ? 'hidden' : 'visible';
+    qSkip.hidden = q.step <= CONTACT || q.step === LAST;
+    qSkip.textContent = q.step === PHOTO ? 'Пришлю позже' : 'Пропустить';
+    qNext.hidden = !(q.step === CONTACT || q.step === 5 || q.step === PHOTO);
+    $('#qFoot').hidden = q.step === 1 || q.step === LAST;
+    qNext.textContent = q.step === CONTACT ? 'Получить расчёт и проект' : (q.step === PHOTO ? 'Готово' : 'Дальше');
+    qNext.disabled = (q.step === 5 && q.important.length === 0) || (q.step === CONTACT && !$('#qConsent').checked);
+  }
+  function startQuiz(kitchen){
+    q.step = 1; q.answers = kitchen ? { kitchen } : {}; q.important = [];
+    $$('#quiz .option').forEach(o => o.setAttribute('aria-pressed', 'false'));
+    $('#qFileList').innerHTML = '';
+    renderQuiz();
+  }
+  function goQuiz(){ $('#quiz-block').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  function go(step){ q.step = step; if (step === CONTACT) $('#qLeadLine').textContent = leadLines[q.answers.situation] || ''; if (step === LAST) finishQuiz(); renderQuiz(); }
+  [['#qSituation','situation',2],['#qDeadline','deadline',CONTACT],['#qPlace','place',5]].forEach(([sel,key,next]) => {
+    $(sel).addEventListener('click', e => {
+      const o = e.target.closest('.option'); if (!o) return;
+      $$(sel + ' .option').forEach(x => x.setAttribute('aria-pressed', String(x === o)));
+      q.answers[key] = o.dataset.v;
+      setTimeout(() => go(next), 220);
+    });
+  });
+  $('#qProject').addEventListener('click', e => {
+    const o = e.target.closest('.option'); if (!o) return;
+    $$('#qProject .option').forEach(x => x.setAttribute('aria-pressed', String(x === o)));
+    q.answers.project = o.dataset.v;
+  });
+  $('#qImportant').addEventListener('click', e => {
+    const o = e.target.closest('.option'); if (!o) return;
+    const v = o.dataset.v, i = q.important.indexOf(v);
+    if (i >= 0) q.important.splice(i, 1); else { q.important.push(v); if (q.important.length > 2) q.important.shift(); }
+    $$('#qImportant .option').forEach(x => x.setAttribute('aria-pressed', String(q.important.includes(x.dataset.v))));
+    renderQuiz();
+  });
+  $('#qFiles').addEventListener('change', e => {
+    const files = [...e.target.files]; const big = files.some(f => f.size > 20 * 1024 * 1024);
+    $('#qFileErr').classList.toggle('show', big);
+    $('#qFileList').innerHTML = files.filter(f => f.size <= 20 * 1024 * 1024).map(f => `<span class="tg">✓ ${f.name}</span>`).join('');
+  });
+  $('#qConsent').addEventListener('change', renderQuiz);
+  qBack.addEventListener('click', () => { if (q.step > 1) go(q.step - 1); });
+  qSkip.addEventListener('click', () => go(q.step === PHOTO ? LAST : q.step + 1));
+  qNext.addEventListener('click', () => {
+    if (q.step === CONTACT) {
+      const ph = $('#qPhone');
+      if (!phoneOk(ph.value)) { ph.classList.add('invalid'); $('#qPhoneErr').classList.add('show'); ph.focus(); return; }
+      /* здесь заявка уходит в Битрикс24, дальше только уточнения к ней */
+    }
+    go(q.step === PHOTO ? LAST : q.step + 1);
+  });
+  function finishQuiz(){ $('#qDoneText').textContent = successText(methodOf($('#qContact'))); }
+  renderQuiz();
+})();
+</script>
+
+</body>
+</html>
+<script>
+/* Проверка: index.html#overlay накладывает экспорт из Figma в режиме «разница» (совпадение = чёрный) */
+if(location.hash==='#pre-overlay'){window.PRE_FREEZE=39;const o=document.createElement('img');o.src='_ref/preloader-figma.png';o.style.cssText='position:fixed;left:0;top:0;width:1920px;height:1080px;z-index:999;mix-blend-mode:difference;pointer-events:none';document.body.append(o)}
+const H=location.hash,ov=(src,w,h,pos)=>{const o=document.createElement('img');o.src=src;o.style.cssText=`position:${pos||'absolute'};left:0;top:0;width:${w}px;height:${h}px;z-index:999;mix-blend-mode:difference;pointer-events:none`;document.body.append(o)};
+/* мобильные проверки — в окне уже 768 px: #m-overlay (страница), #m-menu (меню, «Как работаем» нажат), #m-pre-overlay (прелоудер на 39 %) */
+if(/^#(static|overlay|m-static|m-overlay|m-menu)$/.test(H)){document.documentElement.classList.add('ready','noanim');document.querySelectorAll('.hero,.mhero').forEach(h=>h.classList.add('on-ready'));document.querySelectorAll('.projects,.mprojects').forEach(p=>p.classList.add('inview'));
+  document.getElementById('pre').remove();document.documentElement.classList.remove('loading');document.querySelector('.header').style.position='absolute'}
+if(H==='#overlay')ov('_ref/figma.png',1920,2154);
+if(H==='#m-overlay')ov('_ref/m-figma.png',440,2026);
+if(H==='#m-menu'){menu(true);mnav.children[1].firstElementChild.classList.add('on');if(location.search.includes('ov'))ov('_ref/m-menu-figma.png',440,956,'fixed')}
+if(/^#m-pre/.test(H)){window.PRE_FREEZE=39;window.PRE_BAR=116/380*100;if(H==='#m-pre-overlay')ov('_ref/m-pre-figma.png',440,956,'fixed')}
+</script>
