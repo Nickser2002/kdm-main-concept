@@ -80,8 +80,10 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .arrow{position:absolute;top:980px;width:50px;height:50px;border:1px solid var(--ink-line);display:grid;place-items:center;transition:border-color .2s}
 .arrow:hover{border-color:rgba(255,255,255,.6)}
 .arrow img{width:15px;height:15px}
-.chips{position:absolute;left:950px;top:980px;display:flex;gap:10px}
+/* «Главная_2»: чипсы перенесены влево наверх, столбиком */
+.chips{position:absolute;left:50px;top:150px;display:flex;flex-direction:column;gap:10px}
 .chip{width:300px;height:50px;border:1px solid var(--chip-line);display:grid;place-items:center}
+.chips .chip{border-color:var(--ink-line)}
 
 /* ---------- Проекты ---------- */
 .projects{position:relative;height:1074px;background:#fff;color:var(--ink)}
@@ -312,8 +314,8 @@ html:not(.m) .m-only{display:none}
   <a class="btn rise" style="--d:.9s" href="#"><span class="trim t14">Рассчитать кухню</span><img src="img/arrow-ne.svg" alt=""></a>
   <a class="abs msg m14 u trim rise" style="--d:1s" href="#">или напишите в WhatsApp, Telegram или MAX</a>
 
-  <button class="arrow rise" style="left:790px;--d:1.05s" id="prev" aria-label="Предыдущее фото"><img src="img/arrow-left.svg" alt=""></button>
-  <button class="arrow rise" style="left:850px;--d:1.1s" id="next" aria-label="Следующее фото"><img src="img/arrow-right.svg" alt=""></button>
+  <button class="arrow rise" style="left:905px;--d:1.05s" id="prev" aria-label="Предыдущее фото"><img src="img/arrow-left.svg" alt=""></button>
+  <button class="arrow rise" style="left:965px;--d:1.1s" id="next" aria-label="Следующее фото"><img src="img/arrow-right.svg" alt=""></button>
 
   <div class="chips m16">
     <div class="chip rise" style="--d:1.1s"><span class="trim">1850+ кухонь с 2015 года</span></div>
